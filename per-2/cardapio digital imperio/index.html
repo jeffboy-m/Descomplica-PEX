@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cardápio Digital - Carrossel de Categorias</title>
+<link rel="stylesheet" href="styles.css">
+
+</head>
+<body>
+    <header1>
+        <img src="imagens/topo.png" alt="titulo">
+
+    </header1>
+<header>
+  <nav class="categories-carousel" aria-label="Categorias do cardápio">
+    <!-- Botões das categorias serão inseridos via JS -->
+  </nav>
+</header>
+<main>
+  <!-- Seções das categorias e pratos serão inseridas via JS -->
+</main>
+
+<script>
+  const categorias = [
+    {
+      id: 'Pizzas Tradicionais',
+      nome: 'PIZZAS TRADICIONAIS',
+      itens: [
+         
+        {nome: 'Mussarela', descricao: 'Mussarela, Azeitona e Molho', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/pmuss.jpg'},
+        {nome: 'Calabresa', descricao: 'Calabresa, Mussarela, Cebola e  Orégano', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/pcalab.jpg'},
+        {nome: 'Frango', descricao: 'Frango e Mussarela', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/pfrango.jpg'},
+        {nome: 'Portuguesa', descricao: 'Muss. Presunto, milho, ovo, pimentão, cebola e ervilha', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/pport.jpg'},
+        {nome: 'Mista', descricao: 'Muss. Presunto e oregano', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/pmista.jpg'},
+        {nome: 'Milho Verde', descricao: 'Muss. e Milho Verde', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/pmilho.jpg'},
+        {nome: '2 Queijos', descricao: 'Muss. e Catupiry', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/p2queijos.jpg'},
+        {nome: '3 Queijos', descricao: 'Muss. Catupiry e Cheddar', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/p3queijos.jpg'},
+        {nome: 'Marguerita', descricao: 'Mussarela, tomate e Manjericão', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/pmarguerita.jpg'},
+      ]
+    },
+    {
+      id: 'Pizzas Tropicais',
+      nome: 'PIZZZAS TROPICAIS',
+      itens: [
+        {nome: 'Frango com Catupiry', descricao: 'Frango, Mussarela e Catupiry', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pfranpiry.jpg'},
+        {nome: 'Frango Caipira', descricao: 'Mussarela, Frango, Cheddar e Orégano', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pfrancaip.jpg'},
+        {nome: 'Moda do Pizzaiolo', descricao: 'Mussarela, Presunto, Calabresa e Azeitona', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pmodadop.jpg'},
+        {nome: 'Bacon', descricao: 'Mussarela, Bacon, Azeitona e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pbacon.jpg'},
+        {nome: 'Atum', descricao: 'Mussarela, Atum e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/patum.jpg'},
+        {nome: 'Baiana', descricao: 'Mussarela, Calabresa, Bacon, Pimenta e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pbaiana.jpg'},
+        {nome: 'Jacumã', descricao: 'Mussarela, Frango, Bacon, catupiry e Orégano', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pjacuma.jpg'},
+        {nome: 'Siciliana', descricao: 'Mussarela, Calabresa, Parmesão e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/psici.jpg'},
+        {nome: 'Peperoni', descricao: 'Mussarela, Peperoni e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/ppepe.jpg'},
+        {nome: 'Lombo', descricao: 'Mussarela, Lombo e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/plombo.jpg'},
+        {nome: 'Palmito', descricao: 'Mussarela, e Palmito', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/ppalm.jpg'},
+        {nome: '4 Queijos', descricao: 'Muss. Catupiry, Cheddar e Parmesão', preco: 'R$ 39,99 - P', preco1:'R$ 44,99 - M', preco2:'R$ 54,99 -  G', imagem: 'imagens/p4queijos.jpg'},
+        {nome: '5 Queijos', descricao: 'Muss. Catupiry, Cheddar, Parmesão e Gorgonzola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/p5queijos.jpg'},
+        {nome: 'Carne de Sol', descricao: 'Mussarela, Carne de Sol e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/psol.jpg'},
+        {nome: 'Calabresa Especial', descricao: 'Mussarela, Calabresa, queijo por cima e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pcalaesp.jpg'},
+        {nome: 'Camarão', descricao: 'Mussarela, Camarão e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pcamarao.jpg'},
+        {nome: 'Nordestina', descricao: 'Mussarela, Charque, Bacon, Tomate e Cebola', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pnord.jpg'},
+        {nome: 'Mafiosa', descricao: 'Mussarela, Calabresa Ralada, Tomate e Pimenta', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pmafi.jpg'},
+
+      ]
+    },
+    {
+      id: 'Pizzas Doces',
+      nome: 'PIZZAS DOCES',
+      itens: [
+        {nome: 'Nutela com Morango', descricao: '', preco: 'R$ 59,99 - P', preco1:'R$ 64,99 - M', preco2:'R$ 74,99 -  G', imagem: 'imagens/pnutem.jpg'},
+        {nome: 'Romeu e Julieta', descricao: '', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/promeu.jpg'},
+        {nome: 'Prestigio', descricao: '', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pprest.jpg'},
+        {nome: 'Brigadeiro', descricao: '', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pbriga.jpg'},
+        {nome: 'Dois Amores', descricao: '', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pdoisamores.jpg'},
+        {nome: 'Banana com Canela', descricao: '', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pbananacanela.jpg'},
+        {nome: 'Chocolate com Morango', descricao: '', preco: 'R$ 54,99 - P', preco1:'R$ 59,99 - M', preco2:'R$ 69,99 -  G', imagem: 'imagens/pchocomorango.jpg'},
+      ]
+    },
+    {
+      id: 'Bordas',
+      nome: 'BORDAS',
+      itens: [
+        {nome: 'Mussarela, Chedar, Catupiry, Creme Cheese e Chocolate', descricao: '', preco: 'R$ 15,00', imagem: 'imagens/pborda.jpg'},
+        
+      ]
+    },
+    {
+      id: 'Esfihas',
+      nome: 'ESFIHAS',
+      itens: [
+        {nome: 'Atum', descricao: 'Atum e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/atum.jpg'},
+        {nome: 'Carne', descricao: 'Carne e tomate e cebola', preco: 'R$ 5,49', imagem: 'imagens/carne.jpg'},
+        {nome: 'Cheddar', descricao: 'Queijo Cheddar', preco: 'R$ 5,49', imagem: 'imagens/cheddar.jpg'},
+        {nome: 'Bacon', descricao: 'Bacon e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/bacon.jpg'},
+        {nome: 'Bauru', descricao: 'Presunto e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/atum.jpg'},
+        {nome: 'Alho', descricao: 'Alho Frito e Mussarela<', preco: 'R$ 4,49', imagem: 'imagens/alho.jpg'},
+        {nome: 'Mussarela', descricao: 'Queijo Mussarela', preco: 'R$ 4,49', imagem: 'imagens/mussarela.jpg'},
+        {nome: 'Atum', descricao: 'Atum e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/atum.jpg'},
+        {nome: 'Bróculis', descricao: 'Bróculis e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/broculis.jpg'},
+        {nome: 'Coalho', descricao: 'Queijo coalho com salsa', preco: 'R$ 5,49', imagem: 'imagens/coalho.jpg'},
+        {nome: 'Palmito', descricao: 'Palmito e Mussarela', preco:   'R$ 5,49', imagem: 'imagens/palmito.jpg'},
+        {nome: 'Atum', descricao: 'Atum e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/atum.jpg'},
+        {nome: 'Carioca', descricao: 'Calabresa e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/carioca.jpg'},
+        {nome: 'Tomate Seco', descricao: 'Tomate seco e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/tomateseco.jpg'},
+        {nome: 'Matuta', descricao: 'Frango c/ milho verde e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/matuta.jpg'},
+        {nome: 'Frango', descricao: 'Frango e Mussarela', preco: 'R$ 5,49', imagem: 'imagens/frango.jpg'},
+       
+      ]
+    },
+    {
+      id: 'Esfihas Especiais',
+      nome: 'ESFIHAS ESPECIAIS',
+      itens: [
+        {nome: 'Esfiha Calabresa com Creme', descricao: 'Calabrea c/ Creme Cheese', preco: 'R$ 6,49', imagem: 'imagens/Calabresacomcreme.jpg'},
+        {nome: 'Camarão', descricao: 'Camarão c/ Mussarela', preco: 'R$ 6,49', imagem: 'imagens/camarao.jpg'},
+        {nome: 'Camarão c/ 4 Queijos', descricao: '', preco: 'R$ 6,49', imagem: 'imagens/camarao4.jpg'},
+        {nome: 'Salame c/ Mussarela', descricao: '', preco: 'R$ 6,49', imagem: 'imagens/salame.jpg'},
+        {nome: 'Calabresa Especial', descricao: 'Calabresa, molho e tomate', preco: 'R$ 5,49', imagem: 'imagens/calabresaesp.jpeg'},
+        {nome: 'Frango c/ Catupiry', descricao: '', preco: 'R$ 5,49', imagem: 'imagens/frangocatupiry.jpg'},
+        {nome: '4 Queijos', descricao: 'Muss. catupiry, cheddar e parmesão', preco: 'R$ 5,49', imagem: 'imagens/4queijos.jpg'},
+        {nome: 'Nordestina', descricao: 'Charque c/ mussarela e creme cheese', preco: 'R$ 6,49', imagem: 'imagens/nordestina.jpg'},
+        {nome: 'Frango c/ creme cheese', descricao: '', preco: 'R$ 6,49', imagem: 'imagens/frangocreme.jpg'},
+        {nome: 'Cupim', descricao: 'Cupim c/ creme cheese', preco: 'R$ 7,49', imagem: 'imagens/cupim.jpg'},
+      ]
+    },
+    {
+      id: 'Esfihas Doces',
+      nome: 'ESFIHAS DOCES',
+      itens: [
+        {nome: 'Beijinho', descricao: 'Muss. Coco e Leite condensado', preco: 'R$ 5,49', imagem: 'imagens/beijinho.jpg'},
+       {nome: 'Brigadeiro', descricao: 'Chocolate c/ garnulado', preco: 'R$ 5,49', imagem: 'imagens/brigadeiro.jpg'},
+       {nome: 'Banana Nevada', descricao: 'Banana, choc. branco, muss. canela e leite condensado', preco: 'R$ 6,49', imagem: 'imagens/banana.jpg'},
+       {nome: 'Cartola', descricao: 'Banana, muss. e leite condensado', preco: 'R$ 5,49', imagem: 'imagens/cartola.jpg'},
+       {nome: 'Chocolate', descricao: '', preco: 'R$ 5,49', imagem: 'imagens/chocolate.jpg'},
+       {nome: 'Chocolate Branco', descricao: '', preco: 'R$ 5,49', imagem: 'imagens/chocolateb.jpg'},
+       {nome: 'Doce de Leite', descricao: '', preco: 'R$ 5,49', imagem: 'imagens/docedeleite.jpg'},
+       {nome: 'Romeu e Julieta', descricao: 'Goiabada com mussarela', preco: 'R$ 5,49', imagem: 'imagens/romeu.jpg'},
+       {nome: 'M & Ms', descricao: 'Chocolate c/ m&ms', preco: 'R$ 6,49', imagem: 'imagens/mms.jpg'},
+       {nome: 'Nutela', descricao: '', preco: 'R$ 6,49', imagem: 'imagens/nutela.jpg'},
+       {nome: 'Prestigio', descricao: 'Chocolate, mussarela e coco ralado', preco: 'R$ 5,49', imagem: 'imagens/prestigio.jpg'},
+       {nome: 'OvoMaltine', descricao: 'Chocolate e Ovomaltine', preco: 'R$ 6,49', imagem: 'imagens/ovomaltine.jpg'},
+       {nome: 'Laka Oreo', descricao: 'Chocolate branco c/ Oreo', preco: 'R$ 6,49', imagem: 'imagens/laka.jpg'},
+       {nome: 'Dois Amores', descricao: 'Chocolate branco e preto', preco: 'R$ 5,49', imagem: 'imagens/doisamores.jpg'},
+       
+      ]
+    },
+    {
+      id: 'Barca',
+      nome: 'BARCA',
+      
+      itens: [
+        {nome: 'Barca Jacumã', descricao: 'Batata frita, bife acebolado, salada, calabresa e molho rosê.', preco: 'R$ 99,99', imagem: 'imagens/barcajacuma.jpg'},
+        {nome: 'Barca Tambaba', descricao: 'Batata frita, frango em cubos, camarão, salada e molho rosê.', preco: 'R$ 119,99', imagem: 'imagens/barcajacuma.jpg'},
+        {nome: 'Barca Tabatinga', descricao: 'Batata frita, pastel, bolinho de queijo, calabresa e salada.', preco: 'R$ 89,99', imagem: 'imagens/barcajacuma.jpg'},
+        
+      ]
+    },
+    {
+      id: 'Lanches',
+      nome: 'LANCHES',
+      itens: [
+        {nome: 'Hamburguer', descricao: '', preco: 'R$ 7,99', imagem: 'imagens/hamb.jpg'},
+        {nome: 'X-Burguer', descricao: '', preco: 'R$ 9,99', imagem: 'imagens/xburguer.jpg'},
+        {nome: 'X-Bacon', descricao: '', preco: 'R$ 12,99', imagem: 'imagens/xbacon.jpg'},
+        {nome: 'X-Tudo', descricao: '', preco: 'R$ 17,99', imagem: 'imagens/xtudo.jpg'},
+        {nome: 'X-Egg', descricao: '', preco: 'R$ 11,99', imagem: 'imagens/xegg.jpg'},
+        {nome: 'X-Frango', descricao: '', preco: 'R$ 9,99', imagem: 'imagens/xfrango.jpg'},
+        {nome: 'Misto', descricao: '', preco: 'R$ 6,99', imagem: 'imagens/misto.jpg'},
+        
+      ]
+    },
+    {
+      id: 'Massas',
+      nome: 'MASSAS',
+      itens: [
+        {nome: 'Camarão ao molho Branco', descricao: '', preco: 'R$ 39,90', imagem: 'imagens/massacamarao.jpg'},
+        {nome: 'Frango a Parmegiana P/2', descricao: '', preco: 'R$ 59,90', imagem: 'imagens/massafparme.jpg'},
+        {nome: 'Filé a Parmegiana P/2', descricao: '', preco: 'R$ 82,90', imagem: 'imagens/massafileparme.jpg'},
+        
+      ]
+    },
+    {
+      id: 'Refeições',
+      nome: 'REFEIÇÕES',
+      itens: [
+        {nome: 'Cuscuz Recheado Executivo', descricao: '', preco: 'R$ 24,90 ', imagem: 'imagens/cuscuzcharque.jpg'},
+        {nome: 'Guarnições', descricao: 'Feijão, Arroz, Purê e Macarrão.', preco: 'R$ 9,99 - Porção', imagem: 'imagens/guarnicoes.jpg'},
+        {nome: 'Peixe Frito Anchova (salada e batata)', descricao: ' Completo vem (arroz e pirão)', preco: 'R$ 59,99 ', preco1:'R$ 9,99 - No coco', preco2:'R$ 79,99 - Comp.', imagem: 'imagens/anchova.jpg'},
+        {nome: 'Peixe Frito Cioba (salada e batata)', descricao: ' Completo vem (arroz e pirão)', preco: 'R$ 79,99 ', preco1:'R$ 99,99 - Comp.', preco2:'', imagem: 'imagens/cioba.jpg'},
+        {nome: 'Peixe Meca (salada e batata)', descricao: ' Completo vem (arroz e pirão)', preco: 'R$ 79,99 ', preco1:'R$ 119,99 - Comp.', preco2:'', imagem: 'imagens/meca.jpg'},
+        {nome: 'Isca de Peixe (salada e batata)', descricao: ' Completo vem (arroz e pirão)', preco: 'R$ 79,99 ', preco1:'R$ 99,99 - Comp.', preco2:'', imagem: 'imagens/iscapeixe.jpg'},
+        {nome: 'Filé de Serra (salada e batata)', descricao: ' Completo vem (arroz e pirão)', preco: 'R$ 79,99 ', preco1:'R$ 99,99 - Comp.', preco2:'', imagem: 'imagens/serra.jpg'},
+        {nome: 'Carne de Sol (salada e batata)', descricao: ' Completo vem (arroz e pirão)', preco: 'R$ 59,99 ', preco1:'R$ 79,99 - Comp.', preco2:'', imagem: 'imagens/carnedesol.jpg'},
+        
+      
+        
+      ]
+    },
+    {
+      id: 'Petiscos',
+      nome: 'PETISCOS',
+      itens: [
+        {nome: 'Batata Frita', descricao: 'Porção Grande', preco: 'R$ 19,99', imagem: 'imagens/batatafrita.jpg'},
+        {nome: 'Macaxeira ', descricao: 'Porçao Grande', preco: 'R$ 19,99', imagem: 'imagens/macaxeirafrita.jpg'},
+        {nome: 'Camarão Alho e óleo', descricao: '', preco: 'R$ 59,90', imagem: 'imagens/canaraoalho.jpg'},
+        {nome: 'Carne de Sol c/ Fritas', descricao: '', preco: 'R$ 59,90', imagem: 'imagens/carnedesolcfritas.jpg'},
+        {nome: 'Pastelzinho', descricao: '12 UNI', preco: 'R$ 29,99', imagem: 'imagens/pastelzinho.jpg'},
+        {nome: 'Calabresa Acebolada c/ Fritas', descricao: '', preco: 'R$ 49,90', imagem: 'imagens/calabresacfritas.jpg'},
+        {nome: 'Arrumadinho', descricao: '', preco: 'R$ 39,99', imagem: 'imagens/arrumadinho.jpg'},
+        {nome: 'Isca de Peixe', descricao: '', preco: 'R$ 49,99', imagem: 'imagens/iscapeixe.jpg'},
+      ]
+    },
+    {
+      id: 'Ensopados',
+      nome: 'ENSOPADOS',
+      itens: [
+        {nome: 'Camarão', descricao: '', preco: 'R$ 24,99', imagem: 'imagens/camaraoensopado.jpg'},
+        {nome: 'Marisco', descricao: '', preco: 'R$ 19,99', imagem: 'imagens/mariscoensopado.jpg'},
+        {nome: 'MocoFava', descricao: '', preco: 'R$ 18,99', imagem: 'imagens/mocofavaensopado.jpg'},
+        
+      ]
+    },
+    {
+      id: 'Tapiocas',
+      nome: 'TAPIOCAS',
+      itens: [
+        {nome: 'Charque c/ Queijo', descricao: '', preco: 'R$ 14,99', imagem: 'imagens/tapiocacharque.jpg'},
+        {nome: 'Carne de Sol c/ Queijo', descricao: '', preco: 'R$ 14,99', imagem: 'imagens/tapiocacharque.jpg'},
+        {nome: 'Calabresa c/ Queijo', descricao: '', preco: 'R$ 9,99', imagem: 'imagens/tapiocacalabresa.jpg'},
+        {nome: 'Frango c/ Queijo', descricao: '', preco: 'R$ 9,99', imagem: 'imagens/tapiocafrango.jpg'},
+        {nome: 'Catupiry c/ Queijo', descricao: '', preco: 'R$ 9,99', imagem: 'imagens/tapiocacatupiry.jpg'},
+        {nome: 'Manteiga da Terra', descricao: '', preco: 'R$ 6,99', imagem: 'imagens/tapiocamanteiga.jpg'},
+        
+      ]
+    },
+    {
+      id: 'Pasteis',
+      nome: 'PASTEIS',
+      itens: [
+        {nome: 'Pastel Doce', descricao: '', preco: 'R$ 11,99', imagem: 'imagens/pasteldoce.jpg'},
+        {nome: 'Charque, Carne de Sol, Calabresa, Frango, Catupiry', descricao: 'Todos levam Queijo', preco: 'R$ 9,99', imagem: 'imagens/pastel.jpg'},
+       
+        {nome: 'Império', descricao: 'Queijo, Presunto, Tomate, Milho, Ervilha e Orégano', preco: 'R$ 9,99', imagem: 'imagens/pastelimperio.jpg'},
+        
+      ]
+    },
+    {
+      id: 'Bebidas',
+      nome: 'BEBIDAS',
+      itens: [
+        {nome: 'Agua com ou sem Gás 500ml', descricao: '', preco: 'R$ 4,99', imagem: 'imagens/agua.jpg'},
+        {nome: 'Limoneto / H2O', descricao: '', preco: 'R$ 6,99', imagem: 'imagens/limo.jpg'},
+        {nome: 'Refrigerante Lata e KS', descricao: 'Coca, Guaraná, Fanta, Sprite', preco: 'R$ 4,99 - 5,99', imagem: 'imagens/refrilata.jpg'},
+        {nome: 'Schweppes', descricao: '', preco: 'R$ 6,99', imagem: 'imagens/schweppes.jpg'},
+        {nome: 'Refrigerante 1L', descricao: 'Sukita, Guaraná e Coca', preco: 'R$ 7,99 - 9,99', imagem: 'imagens/refrilitro.jpg'},
+        {nome: 'Refrigerante 2L', descricao: 'Fanta, Guaraná e Coca', preco: 'R$ 11,99 - 14,99', imagem: 'imagens/refrilitro2.jpg'},
+        {nome: 'Suco Copo', descricao: 'Caju, Cajá, Abacaxi, Maraculá e Morango', preco: 'R$ 6,99', imagem: 'imagens/coposuco.jpg'},
+        {nome: 'Suco de Laranja', descricao: '', preco: 'R$ 9,99 - copo', preco1:'R$ 19,99 - Jarra', imagem: 'imagens/sucolaranja500.jpg'},
+        {nome: 'Suco Jarra 1L', descricao: 'Caju, Cajá, Abacaxi, Maraculá e Morango', preco: 'R$ 14,99', imagem: 'imagens/Sucojarra.jpg'},
+        {nome: 'Cerveja', descricao: 'Bama chop e duplo malte, Skol, Bud, Amtel, Heinken, Stella', preco: 'R$ 6,99 - 17,99', imagem: 'imagens/cerveja.jpg'},
+        {nome: 'Cerveja Long', descricao: 'Bud, Heinken, Stella, Corona e Império', preco: 'R$ 6,99 - 9,99', imagem: 'imagens/cerveja.jpg'},
+        {nome: 'Energético', descricao: 'Monster e Redbull', preco: 'R$ 11,99 - 14,99', imagem: 'imagens/energeticolata.jpg'},
+        {nome: 'Energético 1L', descricao: '', preco: 'R$ 11,99', imagem: 'imagens/energetico1litro.jpg'},
+        {nome: 'Energético 2L', descricao: '', preco: 'R$ 16,99', imagem: 'imagens/energetico2litro.jpg'},
+        
+
+      ]
+    },
+    {
+      id: 'Drinks',
+      nome: 'DRINKS',
+      itens: [
+        {nome: 'Caipirinha', descricao: '', preco: 'R$ 11,99', imagem: 'imagens/caipirinha.jpg'},
+        {nome: 'Caipirosca', descricao: '', preco: 'R$ 14,99', imagem: 'imagens/caipirosca.jpg'},
+        {nome: 'Caipifruta', descricao: '', preco: 'R$ 14,99', imagem: 'imagens/caipifruta.jpg'},
+        {nome: 'Nevada', descricao: '', preco: 'R$ 14,99', imagem: 'imagens/nevada.jpg'},
+        
+        
+      ]
+    }
+  ];
+
+  const navCategories = document.querySelector('.categories-carousel');
+  const mainContent = document.querySelector('main');
+
+  // Criar botões das categorias no carrossel
+  categorias.forEach((categoria, index) => {
+    const btn = document.createElement('butto');//'button'
+    btn.classList.add('category-btn');
+    btn.textContent = categoria.nome;
+    btn.setAttribute('data-id', categoria.id);
+    btn.setAttribute('aria-controls', categoria.id);
+    btn.setAttribute('type', 'button');
+    if(index === 0) btn.classList.add('active');
+
+    btn.addEventListener('click', () => {
+      // Scroll para a seção da categoria
+      document.getElementById(categoria.id).scrollIntoView({behavior: 'smooth', block: 'start'});
+      setActiveCategory(categoria.id);
+    });
+
+    navCategories.appendChild(btn);
+  });
+
+  // Criar seções das categorias com itens do cardápio
+  categorias.forEach(categoria => {
+    const section = document.createElement('section');
+    section.classList.add('category-section');
+    section.id = categoria.id;
+
+    const h2 = document.createElement('h2');
+    h2.textContent = categoria.nome;
+    section.appendChild(h2);
+
+    const list = document.createElement('div');
+    list.classList.add('item-list');
+
+    categoria.itens.forEach(item => {
+      const card = document.createElement('article');
+      card.classList.add('item-card');
+
+      const img = document.createElement('img');
+      img.classList.add('item-image');
+      img.src = item.imagem;
+      img.alt = item.nome;
+
+      const name = document.createElement('h3');
+      name.classList.add('item-name');
+      name.textContent = item.nome;
+    
+
+      const desc = document.createElement('p');
+      desc.classList.add('item-description');
+      desc.textContent = item.descricao;
+
+      const price = document.createElement('p');
+      price.classList.add('item-price');
+      price.textContent = item.preco;
+
+      const price1 = document.createElement('p');
+      price1.classList.add('item-price1');
+      price1.textContent = item.preco1;
+
+      const price2 = document.createElement('p');
+      price2.classList.add('item-price2');
+      price2.textContent = item.preco2;
+
+      card.appendChild(img);
+      card.appendChild(name);
+      
+      card.appendChild(price);
+      card.appendChild(price1);
+      card.appendChild(price2);
+      card.appendChild(desc);
+      
+      
+      
+
+      list.appendChild(card);
+    });
+
+    section.appendChild(list);
+    mainContent.appendChild(section);
+  });
+
+  // Função para atualizar botão ativo do carrossel
+  function setActiveCategory(id) {
+    const buttons = document.querySelectorAll('.category-btn');
+    buttons.forEach(btn => {
+      if(btn.getAttribute('data-id') === id){
+        btn.classList.add('active');
+        // Garantir que o botão ativo fique visível no carrossel
+        btn.scrollIntoView({behavior: 'smooth', inline: 'center', block: 'nearest'});
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
+
+  // Detecta a categoria atualmente visível na tela ao rolar a página
+  function onScroll() {
+    const scrollPosition = window.scrollY + window.innerHeight/5; // pegando um pouco acima do meio da viewport
+    let currentId = categorias[0].id;
+
+    for (const categoria of categorias) {
+      const section = document.getElementById(categoria.id);
+      if(section.offsetTop <= scrollPosition){
+        currentId = categoria.id;
+      }
+    }
+    setActiveCategory(currentId);
+  }
+
+  window.addEventListener('scroll', onScroll);
+  window.addEventListener('resize', onScroll);
+
+  // Ativa inicialmente a categoria correta
+  onScroll();
+
+</script>
+</body>
+</html>
+
