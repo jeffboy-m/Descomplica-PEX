@@ -1,0 +1,122 @@
+body {
+font-family: Arial, sans-serif;
+margin: 0;
+padding: 0;
+background-color: #f9f9e9; 
+
+}
+header {
+background-color: #f9f9e9;
+color: #fff;
+padding: 0px 0;
+display: flex;
+justify-content: center;
+align-items: center;
+      
+}
+header img {
+    width: 200px;
+    height: 150px;
+    
+}
+.carousel {
+display: flex;
+overflow-x: auto;
+white-space: nowrap;
+background-color: #f9f9e9;
+padding: 20px ;
+position: sticky;
+top: 0px;
+z-index: 1000;
+
+
+}
+.carousel a {
+display: inline-block;
+padding: 10px 20px;
+margin: 0 5px;
+background-color: red;
+border-radius: 10px;
+text-decoration: none;
+color: white;
+
+
+}
+.carousel a:hover {
+background-color: #e1dede;
+color: black;
+}
+.carousel div {
+display: inline-block;
+padding: 10px 20px;
+color: #fff;
+cursor: pointer;
+}
+.carousel div:hover {
+background-color: #555;
+
+}
+.logo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px;
+
+   
+}
+.category img { 
+    height: 50px;
+    width: 70px;
+    
+}
+
+.grid {
+display: grid; 
+align-items: center; 
+grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+flex-wrap: wrap;
+gap: 5px;
+  
+}
+.item {
+    background-color: white;
+    padding: 1px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    display: grid;
+    grid-template-areas:
+    "img description";
+    align-items: center;
+    gap: 5px;
+    
+}
+.item img { 
+width: 60px;
+height: 60px;
+border-radius: 10px;
+
+            
+}
+.item .description {
+padding: 5px;
+font-weight: bold;
+
+
+}
+.item .price {
+background-color: #eee;
+width: 40px;
+padding: 10px;
+font-weight: bold;
+font-size: 11px;;
+border-radius: 10px;
+
+}    
+.item .ingred {
+margin-left: 5px;
+font-size: 10px;
+font-family: Verdana, Tahoma, sans-serif;
+
+}
+  
