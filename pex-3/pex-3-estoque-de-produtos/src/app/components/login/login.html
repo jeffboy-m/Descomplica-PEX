@@ -1,0 +1,20 @@
+<div class="login-container">
+  <div class="login-card">
+    <h1>Bem-vindo</h1>
+    <p class="subtitle">Estoque Clínica Estética</p>
+    
+    <div class="form-group">
+      <label for="usuario">Usuário</label>
+      <input type="text" id="usuario" [(ngModel)]="usuario" placeholder="Digite seu usuário" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" [(ngModel)]="senha" placeholder="Digite sua senha" class="form-control">
+    </div>
+
+    <p *ngIf="erro" class="error-msg">Preencha usuário e senha para entrar.</p>
+
+    <button (click)="entrar()" class="btn-entrar">ENTRAR</button>
+  </div>
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+  <h2>Estoque da Clínica de Estética</h2>
+  
+  <div class="actions">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="🔍 Buscar produto ou categoria..." 
+        [(ngModel)]="termoBusca"
+        (input)="filtrarProdutos()"
+        class="form-control"
+      >
+    </div>
+    <a routerLink="/cadastrar" class="btn btn-primary">➕ Novo Produto</a>
+  </div>
+
+  <table class="table" *ngIf="produtos.length > 0; else semProdutos">
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Categoria</th>
+        <th>Quantidade</th>
+        <th>Unidade</th>
+        <th>Validade</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let produto of produtos">
+        <td>{{ produto.nome }}</td>
+        <td>{{ produto.categoria }}</td>
+        <td [class.baixo-estoque]="produto.quantidade < 5">
+          {{ produto.quantidade }}
+          <span *ngIf="produto.quantidade < 5" class="alerta">⚠️</span>
+        </td>
+        <td>{{ produto.unidade }}</td>
+        <td>{{ produto.validade | date:'dd/MM/yyyy' }}</td>
+        <td>
+          <a [routerLink]="['/editar', produto.id]" class="btn btn-sm btn-edit">✏️ Editar</a>
+          <button (click)="removerProduto(produto.id)" class="btn btn-sm btn-danger">❌ Remover</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <ng-template #semProdutos>
+    <div class="empty-state">
+      <p>Nenhum produto cadastrado no estoque.</p>
+    </div>
+  </ng-template>
+</div>

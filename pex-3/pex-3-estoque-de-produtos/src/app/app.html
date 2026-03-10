@@ -1,0 +1,13 @@
+<!-- Cabeçalho Global do Sistema -->
+<header *ngIf="exibirHeader">
+  <h1>Estoque Clínica Estética</h1>
+  <div class="user-info">
+    <span>Olá, <strong>{{ nomeUsuario }}</strong></span>
+    <button (click)="logout()" class="btn-logout">Sair</button>
+  </div>
+</header>
+
+<!-- Onde as telas (componentes) serão carregadas -->
+<main>
+  <router-outlet></router-outlet>
+</main>

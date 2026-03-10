@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>Editar Produto</h2>
+
+  <form (ngSubmit)="salvarProduto()">
+    <div class="form-group">
+      <label for="nome">Nome do Produto:</label>
+      <input type="text" id="nome" name="nome" [(ngModel)]="produto.nome" required class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label for="categoria">Categoria:</label>
+      <select id="categoria" name="categoria" [(ngModel)]="produto.categoria" required class="form-control">
+        <option value="" disabled>Selecione uma categoria</option>
+        <option value="Injetáveis">Injetáveis</option>
+        <option value="Descartáveis">Descartáveis</option>
+        <option value="Cosméticos">Cosméticos</option>
+        <option value="Equipamentos">Equipamentos</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group half">
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" id="quantidade" name="quantidade" [(ngModel)]="produto.quantidade" required min="0" class="form-control">
+      </div>
+
+      <div class="form-group half">
+        <label for="unidade">Unidade:</label>
+        <select id="unidade" name="unidade" [(ngModel)]="produto.unidade" required class="form-control">
+          <option value="" disabled>Selecione</option>
+          <option value="ampola">Ampola</option>
+          <option value="caixa">Caixa</option>
+          <option value="frasco">Frasco</option>
+          <option value="unidade">Unidade</option>
+          <option value="ml">ml</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="validade">Data de Validade:</label>
+      <input type="date" id="validade" name="validade" [(ngModel)]="produto.validade" required class="form-control">
+    </div>
+
+    <div class="actions">
+      <button type="submit" class="btn btn-primary">💾 Atualizar</button>
+      <a routerLink="/produtos" class="btn btn-secondary">Cancelar</a>
+    </div>
+  </form>
+</div>
