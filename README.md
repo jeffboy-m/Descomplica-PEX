@@ -8,3 +8,4 @@
 
 - [PEX 2](https://github.com/jeffboy-m/Descomplica-PEX/tree/main/pex-2/cardapioDigitalImperio)
 
+- [PEX 3](https://github.com/jeffboy-m/Descomplica-PEX/tree/main/pex-3/pex-3-estoque-de-produtos)
