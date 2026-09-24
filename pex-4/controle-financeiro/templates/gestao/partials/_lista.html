@@ -1,0 +1,17 @@
+{% if aba_ativa == 'entrada' %}
+<div data-tab-panel="entrada">
+  {% include "gestao/_receitas.html" %}
+</div>
+{% elif aba_ativa == 'saida' %}
+<div data-tab-panel="saida">
+  {% include "gestao/_despesas.html" %}
+</div>
+{% elif aba_ativa == 'cartao' %}
+<div data-tab-panel="cartao">
+  {% include "gestao/_cartao.html" %}
+</div>
+{% elif aba_ativa == 'transferencia' %}
+<div data-tab-panel="transferencia">
+  {% include "gestao/_transferencias.html" %}
+</div>
+{% endif %}

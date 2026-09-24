@@ -1,0 +1,38 @@
+<!-- Modal para Seleção Rápida de Mês/Ano -->
+<dialog class="modal-shell month-picker-modal" id="month-picker-modal" data-modal autofocus>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Selecionar Mês/Ano</h3>
+    </div>
+    <form method="get" action="{{ month_picker_action|default:request.path }}" class="modal-form month-picker-form">
+      {% if month_picker_aba %}
+        <input type="hidden" name="aba" value="{{ month_picker_aba }}">
+      {% endif %}
+      <div class="month-picker-year">
+        <label for="picker_year">Ano:</label>
+        <select id="picker_year" name="ano">
+          {% for y in anos_disponiveis %}
+            <option value="{{ y }}" {% if y == ano %}selected{% endif %}>{{ y }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="months-grid">
+        <button type="submit" name="mes" value="1" class="link-button month-select-btn {% if mes == 1 %}month-select-btn--active{% endif %}" data-month="1">Jan</button>
+        <button type="submit" name="mes" value="2" class="link-button month-select-btn {% if mes == 2 %}month-select-btn--active{% endif %}" data-month="2">Fev</button>
+        <button type="submit" name="mes" value="3" class="link-button month-select-btn {% if mes == 3 %}month-select-btn--active{% endif %}" data-month="3">Mar</button>
+        <button type="submit" name="mes" value="4" class="link-button month-select-btn {% if mes == 4 %}month-select-btn--active{% endif %}" data-month="4">Abr</button>
+        <button type="submit" name="mes" value="5" class="link-button month-select-btn {% if mes == 5 %}month-select-btn--active{% endif %}" data-month="5">Mai</button>
+        <button type="submit" name="mes" value="6" class="link-button month-select-btn {% if mes == 6 %}month-select-btn--active{% endif %}" data-month="6">Jun</button>
+        <button type="submit" name="mes" value="7" class="link-button month-select-btn {% if mes == 7 %}month-select-btn--active{% endif %}" data-month="7">Jul</button>
+        <button type="submit" name="mes" value="8" class="link-button month-select-btn {% if mes == 8 %}month-select-btn--active{% endif %}" data-month="8">Ago</button>
+        <button type="submit" name="mes" value="9" class="link-button month-select-btn {% if mes == 9 %}month-select-btn--active{% endif %}" data-month="9">Set</button>
+        <button type="submit" name="mes" value="10" class="link-button month-select-btn {% if mes == 10 %}month-select-btn--active{% endif %}" data-month="10">Out</button>
+        <button type="submit" name="mes" value="11" class="link-button month-select-btn {% if mes == 11 %}month-select-btn--active{% endif %}" data-month="11">Nov</button>
+        <button type="submit" name="mes" value="12" class="link-button month-select-btn {% if mes == 12 %}month-select-btn--active{% endif %}" data-month="12">Dez</button>
+      </div>
+      <div class="month-picker-actions">
+        <button type="button" class="link-button" data-modal-close>Fechar</button>
+      </div>
+    </form>
+  </div>
+</dialog>

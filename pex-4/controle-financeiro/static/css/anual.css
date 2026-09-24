@@ -1,0 +1,291 @@
+/* Estilos específicos do módulo Anual */
+
+.anual-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  padding: 4px 0;
+}
+
+.anual-nav__selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.anual-nav__title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+}
+
+.year-select-form {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
+}
+
+.year-select {
+  margin: 0;
+  min-height: 32px;
+  padding: 4px 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 8px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  font-weight: 600;
+  cursor: pointer;
+  width: auto;
+}
+
+.anual-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.anual-summary-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--control-radius);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.anual-summary-card__label {
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.anual-summary-card__value {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.anual-summary-card--saldo .anual-summary-card__value {
+  color: var(--text-main);
+}
+
+.anual-summary-card--receitas .anual-summary-card__value {
+  color: var(--text-main);
+}
+
+.anual-summary-card--despesas .anual-summary-card__value {
+  color: var(--danger);
+}
+
+.anual-summary-card--cartao .anual-summary-card__value {
+  color: #3b82f6;
+}
+
+.anual-summary-card__pending {
+  font-size: 0.76rem;
+  font-weight: 500;
+  margin-top: 2px;
+  color: var(--text-sub);
+}
+
+.anual-summary-card__pending--empty {
+  opacity: 0.5;
+}
+
+.anual-summary-card__value.is-positive {
+  color: var(--brand);
+}
+
+.anual-summary-card__value.is-negative {
+  color: var(--danger);
+}
+
+.anual-summary-card--receitas .anual-summary-card__pending {
+  color: var(--text-muted);
+}
+
+.anual-summary-card--despesas .anual-summary-card__pending {
+  color: var(--danger);
+}
+
+
+.anual-dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  margin-top: 10px;
+  align-items: start;
+}
+
+.anual-dashboard-grid .dashboard-card {
+  height: auto;
+  overflow: visible;
+}
+
+.anual-dashboard-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  padding: 18px;
+  border-radius: var(--control-radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.anual-dashboard-grid .dashboard-stack {
+  display: grid;
+  gap: 20px;
+  min-width: 0;
+}
+
+.anual-dashboard-grid .dashboard-stack,
+.anual-dashboard-grid .income-expense-card,
+.anual-dashboard-grid .balance-chart-card,
+.anual-dashboard-grid .expense-ranking-card,
+.anual-dashboard-grid .card-ranking-card {
+  grid-area: auto;
+}
+
+.anual-dashboard-grid .income-expense-card {
+  min-height: 0;
+}
+
+.anual-donut-panel {
+  display: grid;
+  min-width: 0;
+}
+
+.anual-donut-panel .income-expense-donut {
+  display: grid;
+  grid-template-columns: minmax(128px, 152px) minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+}
+
+.anual-donut-panel .income-expense-donut__figure {
+  width: min(152px, 100%);
+}
+
+.anual-dashboard-grid .balance-chart-card {
+  min-width: 0;
+}
+
+@media (min-width: 1350px) {
+  .anual-dashboard-grid {
+    grid-template-areas:
+      "chart expense card"
+      "income expense card";
+    grid-template-columns: minmax(360px, 390px) minmax(340px, 1fr) minmax(340px, 1fr);
+  }
+
+  .anual-dashboard-stack {
+    grid-area: income;
+  }
+
+  .anual-dashboard-grid .balance-chart-card {
+    grid-area: chart;
+  }
+
+  .anual-dashboard-grid .expense-ranking-card {
+    grid-area: expense;
+  }
+
+  .anual-dashboard-grid .card-ranking-card {
+    grid-area: card;
+  }
+}
+
+.anual-card-title {
+  margin: 0 0 16px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.anual-ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.anual-ranking-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.82rem;
+  margin-bottom: 4px;
+}
+
+.anual-ranking-track {
+  height: 8px;
+  background: var(--bg-page);
+  border-radius: 999px;
+  overflow: hidden;
+  border: 1px solid var(--border-soft);
+}
+
+.anual-ranking-track .ranking-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+}
+
+.ranking-bar--income {
+  background: rgba(148, 163, 184, 0.72);
+}
+
+.ranking-bar--danger {
+  background: var(--danger);
+}
+
+.ranking-bar--card {
+  background: #6366f1;
+}
+
+.anual-empty {
+  text-align: center;
+  margin: 0;
+  font-size: 0.8rem;
+}
+
+@media (max-width: 900px) {
+  .anual-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .anual-summary-card {
+    padding: 12px 14px;
+  }
+
+  .anual-summary-card__value {
+    font-size: 1.15rem;
+  }
+  
+  .anual-dashboard-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .anual-donut-panel .income-expense-donut {
+    grid-template-columns: minmax(128px, 152px) minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 520px) {
+  .anual-donut-panel .income-expense-donut {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,259 @@
+/* Aba Cartão - Acordeão de Cartões de Crédito */
+.cards-accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.cards-accordion__empty {
+  margin: 24px 0;
+  text-align: center;
+}
+
+.card-group {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-soft);
+  flex-direction: column;
+  align-items: stretch;
+  padding: 0;
+  margin-bottom: 12px;
+  overflow: hidden;
+  border-radius: var(--control-radius);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+/* Header do Grupo de Cartão */
+.card-group__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--bg-card);
+  transition: background-color var(--transition-fast);
+}
+
+.card-group__header:hover {
+  background: var(--state-hover-bg);
+  color: var(--state-hover-text);
+}
+
+.card-group:hover {
+  border-color: var(--state-hover-border);
+}
+
+.card-group__header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.card-group__icon {
+  width: 40px;
+  height: 28px;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-page);
+  border: 1px solid var(--border-soft);
+  flex-shrink: 0;
+}
+
+.card-group__card-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-group__title-container {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.card-group__name {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.card-group__count {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin-top: 1px;
+}
+
+.card-group__header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.card-group__limit {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0;
+  min-width: 92px;
+}
+
+.card-group__closing,
+.card-group__limit-label {
+  font-size: 0.56rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  line-height: 0.9;
+}
+
+.card-group__closing {
+  opacity: 0.9;
+  align-self: flex-start;
+  margin-top: 1px;
+  white-space: nowrap;
+}
+
+.card-group__limit-label:not(.card-group__closing) {
+  margin-bottom: 3px;
+}
+
+.card-group__limit-value {
+  font-size: 0.84rem;
+  color: var(--brand);
+  font-weight: 700;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.card-group__arrow {
+  color: var(--text-muted);
+  transition: transform var(--transition-normal);
+}
+
+/* Rotação da seta quando expandido */
+.card-group--open .card-group__arrow {
+  transform: rotate(180deg);
+}
+
+/* Área de Conteúdo Colapsável */
+.card-group__content {
+  display: none; /* Controlado via classe do grupo */
+  background: var(--bg-card);
+  border-top: 1px dashed var(--border-soft);
+}
+
+.card-group--open .card-group__content {
+  display: block;
+}
+
+.card-group__transactions {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Item de Transação Agrupada (Fatura Estilo Real) */
+.card-transaction-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-soft);
+  transition: background-color var(--transition-fast);
+}
+
+.card-transaction-item:last-child {
+  border-bottom: none;
+}
+
+.card-transaction-item:hover {
+  background: var(--state-hover-bg);
+  color: var(--state-hover-text);
+}
+
+.card-transaction-item__left {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 2px;
+  flex: 1;
+  padding-right: 12px;
+}
+
+.card-transaction-item__title {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-main);
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.card-transaction-item__sub {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.75rem;
+  color: var(--text-sub);
+  font-weight: 500;
+}
+
+.card-transaction-item__category {
+  color: var(--brand); /* Um verde suave para a categoria */
+  font-weight: 600;
+}
+
+.card-transaction-item__separator {
+  color: var(--border-soft);
+}
+
+.card-transaction-item__desc {
+  color: var(--text-muted);
+  word-wrap: break-word;
+  word-break: break-word;
+}
+
+.card-transaction-item__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex-shrink: 0;
+}
+
+.card-transaction-item__value-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-transaction-item__value {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.card-transaction-item__date {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.card-transaction-item__badge {
+  font-size: 0.68rem;
+  background: var(--bg-page);
+  border: 1px solid var(--border-soft);
+  padding: 1px 6px;
+  border-radius: 999px;
+  color: var(--text-sub);
+  font-weight: 600;
+}

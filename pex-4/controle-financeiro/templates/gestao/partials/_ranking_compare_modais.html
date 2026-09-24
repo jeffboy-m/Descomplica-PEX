@@ -1,0 +1,109 @@
+{% load moeda %}
+
+<dialog class="modal-shell ranking-compare-modal" id="ranking-unificado-comparativo-modal" data-modal>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Geral + Cartões</h3>
+    </div>
+    <div class="ranking-compare">
+      <p class="ranking-compare__period">{{ comparativo_mes_anterior }} → {{ comparativo_mes_atual }}</p>
+      {% if comparativo_ranking_unificado %}
+        <div class="ranking-compare__list">
+          {% for item in comparativo_ranking_unificado %}
+            <div class="ranking-compare__row ranking-compare__row--{% if item.diferenca > 0 %}up{% elif item.diferenca < 0 %}down{% else %}same{% endif %}">
+              <strong>{{ item.categoria }}</strong>
+              <span>{{ comparativo_mes_anterior }} <b>R$ {{ item.anterior|moeda }}</b></span>
+              <span>{{ comparativo_mes_atual }} <b>R$ {{ item.atual|moeda }}</b></span>
+              <span class="ranking-compare__delta">
+                {% if item.atual > 0 and item.anterior == 0 %}
+                  Novo gasto
+                {% elif item.diferenca > 0 %}
+                  Gastou mais
+                {% elif item.diferenca < 0 %}
+                  Gastou menos
+                {% else %}
+                  Igual
+                {% endif %}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="hint">Sem dados para comparar.</p>
+      {% endif %}
+      <button type="button" class="link-button" data-modal-close>Fechar</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal-shell ranking-compare-modal" id="ranking-geral-comparativo-modal" data-modal>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Geral</h3>
+    </div>
+    <div class="ranking-compare">
+      <p class="ranking-compare__period">{{ comparativo_mes_anterior }} → {{ comparativo_mes_atual }}</p>
+      {% if comparativo_ranking_gastos %}
+        <div class="ranking-compare__list">
+          {% for item in comparativo_ranking_gastos %}
+            <div class="ranking-compare__row ranking-compare__row--{% if item.diferenca > 0 %}up{% elif item.diferenca < 0 %}down{% else %}same{% endif %}">
+              <strong>{{ item.categoria }}</strong>
+              <span>{{ comparativo_mes_anterior }} <b>R$ {{ item.anterior|moeda }}</b></span>
+              <span>{{ comparativo_mes_atual }} <b>R$ {{ item.atual|moeda }}</b></span>
+              <span class="ranking-compare__delta">
+                {% if item.atual > 0 and item.anterior == 0 %}
+                  Novo gasto
+                {% elif item.diferenca > 0 %}
+                  Gastou mais
+                {% elif item.diferenca < 0 %}
+                  Gastou menos
+                {% else %}
+                  Igual
+                {% endif %}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="hint">Sem dados para comparar.</p>
+      {% endif %}
+      <button type="button" class="link-button" data-modal-close>Fechar</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog class="modal-shell ranking-compare-modal" id="ranking-cartao-comparativo-modal" data-modal>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Cartões</h3>
+    </div>
+    <div class="ranking-compare">
+      <p class="ranking-compare__period">{{ comparativo_mes_anterior }} → {{ comparativo_mes_atual }}</p>
+      {% if comparativo_ranking_cartao %}
+        <div class="ranking-compare__list">
+          {% for item in comparativo_ranking_cartao %}
+            <div class="ranking-compare__row ranking-compare__row--{% if item.diferenca > 0 %}up{% elif item.diferenca < 0 %}down{% else %}same{% endif %}">
+              <strong>{{ item.categoria }}</strong>
+              <span>{{ comparativo_mes_anterior }} <b>R$ {{ item.anterior|moeda }}</b></span>
+              <span>{{ comparativo_mes_atual }} <b>R$ {{ item.atual|moeda }}</b></span>
+              <span class="ranking-compare__delta">
+                {% if item.atual > 0 and item.anterior == 0 %}
+                  Novo gasto
+                {% elif item.diferenca > 0 %}
+                  Gastou mais
+                {% elif item.diferenca < 0 %}
+                  Gastou menos
+                {% else %}
+                  Igual
+                {% endif %}
+              </span>
+            </div>
+          {% endfor %}
+        </div>
+      {% else %}
+        <p class="hint">Sem dados para comparar.</p>
+      {% endif %}
+      <button type="button" class="link-button" data-modal-close>Fechar</button>
+    </div>
+  </div>
+</dialog>

@@ -1,0 +1,724 @@
+/* Aba Extrato - Dashboard & Rankings */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+  align-items: start;
+  margin-top: 10px;
+}
+
+.dashboard-card {
+  padding: 18px;
+  height: auto;
+  overflow: visible;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--control-radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.dashboard-card__title {
+  margin: 0 0 16px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.dashboard-stack {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+  min-width: 0;
+}
+
+.income-expense-card {
+  align-self: start;
+  min-height: 0;
+  padding: 14px 16px !important;
+}
+
+.income-expense-card h4 {
+  margin-bottom: 10px !important;
+}
+
+.income-expense-card__body {
+  display: grid;
+  gap: 10px;
+}
+
+.income-expense-donut {
+  display: grid;
+  grid-template-columns: 152px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 0;
+}
+
+.income-expense-donut__figure {
+  position: relative;
+  width: 152px;
+  aspect-ratio: 1;
+  margin: 0 auto;
+}
+
+.income-expense-donut__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.income-expense-donut__track,
+.income-expense-donut__slice {
+  fill: none;
+  stroke-width: 22;
+}
+
+.income-expense-donut__track { stroke: var(--bg-page); }
+.income-expense-donut__slice { transition: stroke-dasharray 0.35s ease, stroke-dashoffset 0.35s ease; }
+.income-expense-donut__slice--income,
+.income-expense-donut__dot--income { stroke: var(--brand); background: var(--brand); }
+.income-expense-donut__slice--expense,
+.income-expense-donut__dot--expense { stroke: var(--danger); background: var(--danger); }
+
+.income-expense-donut__center {
+  position: absolute;
+  inset: 50% auto auto 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  gap: 3px;
+  width: 76px;
+  max-width: 58%;
+  min-width: 0;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.income-expense-donut__center span,
+.income-expense-donut__legend-row span {
+  color: var(--text-muted);
+}
+
+.income-expense-donut__center span {
+  font-size: 0.58rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.income-expense-donut__center strong,
+.income-expense-donut__legend-row strong {
+  color: var(--text-main);
+}
+
+.income-expense-donut__center strong {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  font-size: clamp(0.62rem, 0.9vw, 0.78rem);
+  line-height: 1.05;
+  text-overflow: ellipsis;
+}
+
+.income-expense-donut__center--positive strong { color: var(--brand); }
+.income-expense-donut__center--negative strong { color: var(--danger); }
+
+.income-expense-donut__legend {
+  display: grid;
+  gap: 10px;
+}
+
+.income-expense-donut__legend-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 0.82rem;
+}
+
+.income-expense-donut__legend-row span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.income-expense-donut__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+
+.budget-reading__rows {
+  display: grid;
+  gap: 7px;
+  margin: 2px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.budget-reading__rows span {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  align-items: baseline;
+  gap: 12px;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.budget-reading__rows strong {
+  color: var(--text-main);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.budget-reading__hint {
+  margin: 2px 0 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--border-soft);
+}
+
+.balance-chart-card {
+  min-height: 0;
+}
+
+.balance-chart {
+  min-height: 0;
+}
+
+.balance-chart__svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+
+.balance-chart__axis {
+  stroke: var(--border-soft);
+  stroke-width: 1;
+}
+
+.balance-chart__average {
+  stroke: var(--brand);
+  stroke-width: 1.5;
+  stroke-dasharray: 5 7;
+  opacity: 0.62;
+}
+
+.balance-chart__average-label {
+  fill: var(--brand-strong);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.balance-chart__area {
+  fill: url("#balanceAreaGradient");
+}
+
+.balance-chart__line {
+  fill: none;
+  stroke: url("#balanceLineGradient");
+  stroke-width: 4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 8px 16px rgba(59, 130, 246, 0.22));
+}
+
+.balance-chart__point {
+  cursor: pointer;
+  outline: none;
+}
+
+.balance-chart__point circle {
+  fill: var(--bg-card);
+  stroke: #60a5fa;
+  stroke-width: 3;
+}
+
+.balance-chart__hit-area {
+  fill: transparent;
+  stroke: transparent;
+  pointer-events: all;
+}
+
+.balance-chart__value {
+  fill: var(--text-main);
+  font-size: 13px;
+  font-weight: 800;
+  opacity: 0;
+  paint-order: stroke;
+  pointer-events: none;
+  stroke: var(--bg-card);
+  stroke-linejoin: round;
+  stroke-width: 4px;
+  transition: opacity 0.16s ease;
+}
+
+.balance-chart__point:hover .balance-chart__value,
+.balance-chart__point:focus .balance-chart__value,
+.balance-chart__point.is-active .balance-chart__value {
+  opacity: 1;
+}
+
+.balance-chart__label {
+  fill: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.balance-chart__empty {
+  margin: 0;
+  text-align: center;
+}
+
+.ranking-bar {
+  width: 0%;
+  height: 100%;
+  border-radius: 0 999px 999px 0;
+  transition: width 0.72s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.ranking-track {
+  height: 12px;
+  overflow: hidden;
+  background: var(--bg-page);
+  border: 1px solid var(--border-soft);
+  border-radius: 0;
+}
+
+.ranking-track--income {
+  height: 8px;
+  border-radius: 999px;
+}
+
+.ranking-track--income .ranking-bar {
+  border-radius: 0 999px 999px 0;
+}
+
+.ranking-card-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 0 0 16px;
+}
+
+.ranking-card-head h4 {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.ranking-card-head__title {
+  color: var(--text-main) !important;
+  font-size: 1rem !important;
+  font-weight: 800 !important;
+  letter-spacing: 0 !important;
+  text-transform: none !important;
+}
+
+.ranking-card-head__actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ranking-goals-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 0 10px;
+  color: var(--brand);
+  font-size: 0.72rem;
+  font-weight: 800;
+  line-height: 1;
+  text-decoration: none;
+  border: 1px solid rgba(20, 200, 120, 0.24);
+  border-radius: 8px;
+  background: rgba(20, 200, 120, 0.08);
+}
+
+.ranking-goals-link:hover,
+.ranking-goals-link:focus-visible {
+  color: var(--brand-strong);
+  border-color: var(--brand);
+  background: rgba(20, 200, 120, 0.14);
+  outline: none;
+}
+
+.ranking-compare-button {
+  display: inline-grid;
+  place-items: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  color: #60a5fa;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(96, 165, 250, 0.22);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ranking-compare-button:hover,
+.ranking-compare-button:focus-visible {
+  color: #93c5fd;
+  border-color: rgba(147, 197, 253, 0.42);
+  background: rgba(59, 130, 246, 0.16);
+  outline: none;
+}
+
+.ranking-compare-button svg {
+  pointer-events: none;
+}
+
+.ranking-link {
+  display: block;
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.ranking-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ranking-item__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+  font-size: 0.82rem;
+}
+
+.ranking-empty {
+  margin: 0;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.ranking-link:visited,
+.ranking-link:hover,
+.ranking-link:focus-visible {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.ranking-link *,
+.ranking-link:hover *,
+.ranking-link:focus-visible * {
+  text-decoration: none !important;
+}
+
+.ranking-link > div:first-child > span:first-child,
+.ranking-link > div:first-child > strong {
+  color: var(--text-main) !important;
+}
+
+.ranking-link .ranking-item__meta {
+  color: var(--text-muted) !important;
+}
+
+.ranking-link:hover > div:first-child > span:first-child,
+.ranking-link:focus-visible > div:first-child > span:first-child {
+  color: var(--text-main) !important;
+}
+
+.active-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  margin: 0 0 14px;
+  min-height: 36px;
+  padding: 6px 6px 6px 12px;
+  background: var(--selection-bg);
+  border: 1px solid var(--selection-border);
+  border-radius: var(--control-radius);
+  color: var(--text-main);
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.active-filter__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.active-filter:hover .active-filter__close,
+.active-filter:focus-visible .active-filter__close {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.active-filter,
+.active-filter span {
+  color: var(--text-main) !important;
+  text-decoration: none !important;
+}
+
+.active-filter[hidden] {
+  display: none;
+}
+
+.active-filter:hover,
+.active-filter:focus-visible {
+  background: var(--selection-bg);
+  border-color: var(--selection-border);
+  color: var(--text-main);
+  outline: none;
+  transform: none;
+}
+
+.ranking-item__meta {
+  display: block;
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.ranking-bar--danger { background: var(--danger); }
+.ranking-bar--card { background: #6366f1; }
+.ranking-bar--income { background: rgba(148, 163, 184, 0.72); }
+.ranking-item--sem-meta .ranking-bar { background: rgba(148, 163, 184, 0.72); }
+.ranking-item--dentro-meta .ranking-bar { background: var(--brand); }
+.ranking-item--alerta-meta .ranking-bar { background: #f97316; }
+.ranking-item--estourado .ranking-bar { background: #ef4444; }
+
+.ranking-compare-modal {
+  width: min(620px, calc(100vw - 24px));
+}
+
+.ranking-compare {
+  display: grid;
+  gap: 14px;
+  padding: 16px 20px 20px;
+}
+
+.ranking-compare__period {
+  margin: 0;
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ranking-compare__list {
+  display: grid;
+  gap: 8px;
+  max-height: min(58vh, 520px);
+  overflow: auto;
+  padding-right: 2px;
+  scrollbar-width: none;
+}
+
+.ranking-compare__list::-webkit-scrollbar {
+  display: none;
+}
+
+.ranking-compare__row {
+  display: grid;
+  grid-template-columns: minmax(110px, 1.2fr) minmax(92px, 1fr) minmax(92px, 1fr) minmax(110px, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.ranking-compare__row strong,
+.ranking-compare__row b {
+  color: var(--text-main);
+}
+
+.ranking-compare__row span {
+  display: grid;
+  gap: 2px;
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+}
+
+.ranking-compare__delta {
+  justify-self: end;
+  text-align: right;
+}
+
+.ranking-compare__delta small {
+  color: inherit;
+}
+
+.ranking-compare__row--up .ranking-compare__delta {
+  color: var(--danger);
+}
+
+.ranking-compare__row--down .ranking-compare__delta {
+  color: var(--brand);
+}
+
+.ranking-compare__row--same .ranking-compare__delta {
+  color: var(--text-muted);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .income-expense-donut__slice {
+    animation: donutSliceDraw 0.72s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    stroke-dasharray: 0 var(--donut-circumference);
+    stroke-dashoffset: var(--donut-offset);
+  }
+
+  .income-expense-donut__slice--expense {
+    animation-delay: 0.12s;
+  }
+
+  .balance-chart__area {
+    animation: chartAreaReveal 0.52s ease 0.24s both;
+  }
+
+  .balance-chart__line {
+    animation: chartLineDraw 0.78s cubic-bezier(0.22, 1, 0.36, 1) both;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+  }
+
+  .balance-chart__point circle,
+  .balance-chart__label,
+  .balance-chart__average,
+  .balance-chart__average-label {
+    animation: chartPointReveal 0.36s ease 0.58s both;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ranking-bar,
+  .income-expense-donut__slice,
+  .balance-chart__area,
+  .balance-chart__line,
+  .balance-chart__point circle,
+  .balance-chart__label,
+  .balance-chart__average,
+  .balance-chart__average-label {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+@keyframes donutSliceDraw {
+  from {
+    stroke-dasharray: 0 var(--donut-circumference);
+  }
+
+  to {
+    stroke-dasharray: var(--donut-length) var(--donut-rest);
+  }
+}
+
+@keyframes chartLineDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes chartAreaReveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes chartPointReveal {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* Em telas grandes, dá prioridade visual ao gráfico de linha e deixa os rankings respirarem à direita. */
+@media (min-width: 1350px) {
+  .dashboard-grid {
+    grid-template-areas:
+      "chart expense card"
+      "income expense card";
+    grid-template-columns: minmax(360px, 390px) minmax(340px, 1fr) minmax(340px, 1fr) !important;
+  }
+
+  .dashboard-stack--income {
+    grid-area: income;
+  }
+
+  .balance-chart-card {
+    grid-area: chart;
+  }
+
+  .expense-ranking-card {
+    grid-area: expense;
+  }
+
+  .card-ranking-card {
+    grid-area: card;
+  }
+}
+
+@media (max-width: 600px) {
+  .income-expense-card {
+    padding: 14px !important;
+  }
+
+  .income-expense-donut {
+    grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .income-expense-donut__figure {
+    width: min(152px, 62vw);
+  }
+
+  .balance-chart-card {
+    min-height: 0;
+  }
+
+  .balance-chart {
+    min-height: 0;
+  }
+
+  .balance-chart__svg {
+    height: auto;
+    min-height: 0;
+  }
+
+  .ranking-compare__row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto;
+  }
+
+  .ranking-compare__delta {
+    grid-column: auto;
+    justify-self: end;
+    align-self: end;
+    text-align: right;
+  }
+
+  .ranking-compare__row > strong {
+    grid-column: 1 / -1;
+  }
+}

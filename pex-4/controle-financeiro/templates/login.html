@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Entrar{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="wrap login-wrap">
+    <section class="card login-card">
+      <div class="eyebrow">Acesso</div>
+      <h1>Entrar no sistema</h1>
+      <p class="hint">Use seu email para acessar o menu e salvar seus cadastros.</p>
+      <form method="post" class="login-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <p>
+          <label for="{{ form.username.id_for_label }}">Email:</label>
+          {{ form.username }}
+          {{ form.username.errors }}
+        </p>
+        <p class="password-field">
+          <label for="{{ form.password.id_for_label }}">Senha:</label>
+          <span class="password-toggle-field">
+            {{ form.password }}
+            <button class="password-toggle-button" type="button" data-password-toggle aria-label="Mostrar senha">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M2.5 12s3.5-6 9.5-6 9.5 6 9.5 6-3.5 6-9.5 6-9.5-6-9.5-6Z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+                <line data-password-toggle-slash x1="4" y1="4" x2="20" y2="20"></line>
+              </svg>
+            </button>
+          </span>
+          {{ form.password.errors }}
+        </p>
+        <button type="submit">Entrar</button>
+      </form>
+    </section>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script type="module" src="{% static 'js/login.js' %}"></script>
+{% endblock %}

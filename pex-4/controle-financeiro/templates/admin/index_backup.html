@@ -1,0 +1,20 @@
+{% extends "admin/index.html" %}
+{% load static %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/admin_backup.css' %}">
+{% endblock %}
+
+{% block content %}
+  {% if request.user.is_superuser %}
+    <div class="module backup-admin-module">
+      <h2>Backup do banco</h2>
+      <p>Gere e baixe um backup do banco PostgreSQL de producao.</p>
+      <p>
+        <a class="button" href="{% url 'admin:backup_banco' %}">Abrir backup do banco</a>
+      </p>
+    </div>
+  {% endif %}
+  {{ block.super }}
+{% endblock %}

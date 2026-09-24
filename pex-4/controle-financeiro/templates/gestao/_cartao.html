@@ -1,0 +1,98 @@
+<!-- Aba Cartão (Despesas no Cartão de Crédito com Acordeão Agrupado) -->
+{% load static %}
+{% load moeda %}
+
+<div class="cards-accordion">
+  {% for item in cartoes_com_transacoes %}
+    {% if item.tem_transacoes %}
+      <div class="card-group {% if categoria_filtro %}card-group--open{% endif %}" data-type="cartao" data-card-group-id="{{ item.cartao.id|default:'sem-cartao' }}">
+        <!-- Header do Cartão -->
+        <div class="card-group__header" data-card-toggle>
+          <div class="card-group__header-left">
+            <div class="card-group__icon">
+              {% if item.cartao.logo %}
+                <img class="card-group__card-logo" src="{% static item.cartao.logo %}" alt="{{ item.cartao.nome }}">
+              {% else %}
+                💳
+              {% endif %}
+            </div>
+            <div class="card-group__title-container">
+              <span class="card-group__name">{{ item.cartao.nome|default:"Outros Cartões" }}</span>
+              <span class="card-group__count">{{ item.qtd_transacoes }} lançamento{{ item.qtd_transacoes|pluralize:"s" }}</span>
+            </div>
+          </div>
+          <div class="card-group__header-right">
+            <span class="card-group__closing">Fecha dia {{ item.cartao.dia_fechamento }}</span>
+            {% if item.limite_total > 0 %}
+              <span class="card-group__limit">
+                <span class="card-group__limit-label">Limite restante</span>
+                <strong class="card-group__limit-value">R$ {{ item.limite_restante|moeda }}</strong>
+              </span>
+            {% endif %}
+            <svg class="card-group__arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </div>
+        
+        <!-- Lista de Lançamentos do Cartão (Colapsável) -->
+        <div class="card-group__content">
+          <div class="card-group__transactions">
+            {% for t in item.transacoes %}
+              <div class="card-transaction-item" data-type="{{ t.tipo }}"
+                   data-id="{{ t.id }}"
+                   data-tipo="{{ t.tipo }}"
+                   data-data="{{ t.data|date:'Y-m-d' }}"
+                   data-categoria="{{ t.categoria.id }}"
+                   data-beneficiario="{{ t.beneficiario_pagador }}"
+                   data-descricao="{{ t.descricao }}"
+                   data-valor="{{ t.valor|stringformat:'.2f' }}"
+                   data-banco="{{ t.banco_origem_destino.id|default:'' }}"
+                   data-cartao="{{ t.cartao.id|default:'' }}"
+                   data-status="{{ t.status }}"
+                   data-parcelas="{{ t.total_parcelas }}"
+                   data-recorrencia="{{ t.recorrencia_id|default:'' }}"
+                   data-assinatura-recorrente="{{ t.assinatura_recorrente|yesno:'1,0' }}"
+                   data-edit-transaction>
+                
+                <div class="card-transaction-item__left">
+                  <span class="card-transaction-item__title">
+                    {{ t.beneficiario_pagador|default:"Lançamento" }}
+                  </span>
+                  <div class="card-transaction-item__sub">
+                    <span class="card-transaction-item__category">
+                      <span>{{ t.categoria.nome }}</span>
+                      <span class="transaction-item__category-icon" aria-hidden="true">{{ t.categoria.icone }}</span>
+                    </span>
+                    {% if t.recorrencia_id or t.assinatura_recorrente %}
+                      <span class="transaction-item__recurrence-badge" title="Lançamento recorrente">Recorrente</span>
+                    {% endif %}
+                    {% if t.descricao %}
+                      <span class="card-transaction-item__separator">•</span>
+                      <span class="card-transaction-item__desc">{{ t.descricao }}</span>
+                    {% endif %}
+                  </div>
+                </div>
+                
+                <div class="card-transaction-item__right">
+                  <div class="card-transaction-item__value-row">
+                    <span class="card-transaction-item__value">
+                      R$ {{ t.valor|moeda }}
+                    </span>
+                    {% if t.total_parcelas > 1 %}
+                      <span class="card-transaction-item__badge">{{ t.parcela_atual }}/{{ t.total_parcelas }}</span>
+                    {% endif %}
+                  </div>
+                  <span class="card-transaction-item__date">{{ t.data|date:"d/m/Y" }}</span>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  {% empty %}
+    <p class="hint cards-accordion__empty">Nenhum gasto em cartão neste mês.</p>
+  {% endfor %}
+</div>
+

@@ -1,0 +1,38 @@
+{% load moeda %}
+
+<div class="transfer-list" data-transferencias-panel data-type="transferencia">
+  {% for transferencia in transferencias_mes %}
+    <div class="transaction-item transfer-item"
+         data-type="transferencia"
+         data-transferencia-id="{{ transferencia.id }}"
+         data-transferencia-data="{{ transferencia.data|date:'Y-m-d' }}"
+         data-transferencia-origem="{{ transferencia.banco_origem.id }}"
+         data-transferencia-destino="{{ transferencia.banco_destino.id }}"
+         data-transferencia-valor="{{ transferencia.valor|stringformat:'.2f' }}"
+         data-transferencia-descricao="{{ transferencia.descricao }}"
+         data-edit-transferencia>
+      <div class="transaction-item__left">
+        <div class="transaction-item__icon">
+          🔁
+        </div>
+        <div class="transaction-item__info">
+          <span class="transaction-item__category">Transferência entre contas</span>
+          <span class="transaction-item__desc">
+            {{ transferencia.banco_origem.nome }} → {{ transferencia.banco_destino.nome }}
+          </span>
+          {% if transferencia.descricao %}
+            <span class="transaction-item__source">{{ transferencia.descricao }}</span>
+          {% endif %}
+        </div>
+      </div>
+      <div class="transaction-item__right">
+        <span class="transaction-item__value">
+          R$ {{ transferencia.valor|moeda }}
+        </span>
+        <span class="transaction-item__date">{{ transferencia.data|date:"d/m/Y" }}</span>
+      </div>
+    </div>
+  {% empty %}
+    <p class="hint transfer-list__empty">Nenhuma transferência entre contas neste mês.</p>
+  {% endfor %}
+</div>

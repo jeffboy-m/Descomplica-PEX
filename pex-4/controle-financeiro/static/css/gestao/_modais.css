@@ -1,0 +1,181 @@
+/* Modais & Diálogos */
+.gestao-modal--xs {
+  width: min(340px, calc(100vw - 24px));
+}
+
+.gestao-modal--sm {
+  width: min(360px, calc(100vw - 24px));
+}
+
+.gestao-modal--confirm {
+  width: min(380px, calc(100vw - 24px));
+}
+
+.gestao-modal-form {
+  padding: 16px 20px 20px;
+}
+
+.modal-actions--end {
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.modal-actions--split {
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+}
+
+.modal-actions__group {
+  display: flex;
+  gap: 8px;
+}
+
+.gestao-choice-modal {
+  padding: 18px 20px 20px;
+}
+
+.gestao-choice-modal__text {
+  margin: 0 0 18px;
+  color: var(--text-main);
+  font-size: 0.94rem;
+  font-weight: 500;
+}
+
+.gestao-choice-modal__actions {
+  display: grid;
+  gap: 8px;
+}
+
+.gestao-choice-modal__button {
+  justify-content: center;
+  width: 100%;
+  border-radius: var(--control-radius);
+}
+
+.ghost-button.gestao-choice-modal__button {
+  padding: 10px;
+}
+
+.gestao-modal-field {
+  margin-bottom: 14px !important;
+}
+
+.modal-field-control-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-field-control-row select {
+  min-width: 0;
+  flex: 1;
+}
+
+.modal-field-shortcut {
+  position: relative;
+  display: inline-block;
+  width: 38px;
+  height: 38px;
+  min-width: 38px;
+  padding: 0;
+  color: var(--text-muted);
+  text-decoration: none;
+  border: 1px solid var(--border-input);
+  border-radius: 10px;
+  background: transparent;
+}
+
+.modal-field-shortcut::before,
+.modal-field-shortcut::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 2px;
+  border-radius: 999px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+}
+
+.modal-field-shortcut::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.modal-field-shortcut:hover,
+.modal-field-shortcut:focus-visible {
+  color: var(--text-main);
+  border-color: var(--interactive-border);
+  background: var(--interactive-bg);
+  outline: none;
+}
+
+.modal-actions--confirm {
+  justify-content: center;
+  gap: 12px;
+  width: 100%;
+  margin-top: 0;
+}
+
+.modal-confirm-action {
+  flex: 1;
+  border-radius: 999px;
+}
+
+.month-picker-modal {
+  width: min(340px, calc(100vw - 24px));
+}
+
+.month-picker-form {
+  padding: 16px 20px 20px;
+}
+
+.month-picker-year {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.month-picker-year label {
+  margin: 0;
+  color: var(--text-main);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.month-picker-year select {
+  width: 100px;
+  padding: 6px 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  background: var(--bg-card);
+  color: var(--text-main);
+}
+
+.months-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.month-picker-actions {
+  display: flex;
+  justify-content: center;
+}
+
+.month-select-btn--active {
+  background: var(--selection-bg) !important;
+  color: var(--selection-text) !important;
+  border-color: var(--selection-border) !important;
+}
+
+.month-select-btn:hover {
+  background: var(--interactive-bg) !important;
+  color: var(--interactive-text) !important;
+  border-color: var(--interactive-border) !important;
+}

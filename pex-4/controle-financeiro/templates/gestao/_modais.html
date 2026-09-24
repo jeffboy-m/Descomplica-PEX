@@ -1,0 +1,244 @@
+{% load moeda %}
+<!-- Modal de Renda Base -->
+<dialog class="modal-shell gestao-modal--sm" id="orcamento-modal" data-modal autofocus>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Renda base</h3>
+    </div>
+    <form method="post" action="{% url 'salvar-orcamento' %}" class="modal-form gestao-modal-form">
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ request.get_full_path }}">
+      <input type="hidden" name="mes" value="{{ mes }}">
+      <input type="hidden" name="ano" value="{{ ano }}">
+
+      {{ orcamento_form.non_field_errors }}
+
+      <p>
+        <label for="{{ orcamento_form.renda_base_mensal.id_for_label }}">Renda base mensal:</label>
+        {{ orcamento_form.renda_base_mensal }}
+        {{ orcamento_form.renda_base_mensal.errors }}
+      </p>
+
+      <div class="form-actions modal-actions modal-actions--end">
+        <button type="submit">Salvar</button>
+        <button type="button" class="link-button" data-modal-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal de Cadastro / Edição de Transação -->
+<dialog class="modal-shell" id="transacao-modal" data-modal autofocus>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Novo Lançamento</h3>
+    </div>
+    <form method="post" class="modal-form" id="transacao-form">
+      {% csrf_token %}
+      <input type="hidden" name="action" id="modal_action" value="save">
+      <input type="hidden" name="transacao_id" id="modal_transacao_id" value="">
+      <input type="hidden" name="delete_scope" id="modal_delete_scope" value="">
+      <input type="hidden" name="update_scope" id="modal_update_scope" value="single">
+      <input type="hidden" name="aba" value="{{ aba_ativa }}">
+      
+      {{ form.non_field_errors }}
+      
+      {% for field in form %}
+        <p{% if field.name == "categoria" or field.name == "banco_origem_destino" or field.name == "cartao" %} class="modal-field-with-shortcut"{% endif %}>
+          <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+          {% if field.name == "categoria" %}
+            <span class="modal-field-control-row">
+              {{ field }}
+              <a class="modal-field-shortcut" href="{% url 'cadastros-categorias' %}?open_modal=categoria-modal" aria-label="Cadastrar nova categoria" title="Cadastrar nova categoria"></a>
+            </span>
+          {% elif field.name == "banco_origem_destino" %}
+            <span class="modal-field-control-row">
+              {{ field }}
+              <a class="modal-field-shortcut" href="{% url 'cadastros-bancos' %}?open_modal=banco-modal" aria-label="Cadastrar novo banco" title="Cadastrar novo banco"></a>
+            </span>
+          {% elif field.name == "cartao" %}
+            <span class="modal-field-control-row">
+              {{ field }}
+              <a class="modal-field-shortcut" href="{% url 'cadastros-cartoes' %}?open_modal=cartao-modal" aria-label="Cadastrar novo cartão" title="Cadastrar novo cartão"></a>
+            </span>
+          {% else %}
+            {{ field }}
+          {% endif %}
+          {{ field.errors }}
+        </p>
+      {% endfor %}
+      
+      <div class="form-actions modal-actions modal-actions--split">
+        <div class="modal-actions__group">
+          <button type="submit">Salvar</button>
+          <button type="button" class="danger-button" id="modal_delete_btn" data-submit-delete hidden>Excluir</button>
+        </div>
+        <button type="button" class="link-button" data-modal-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal de Confirmacao de Atualizacao em Cadeia -->
+<dialog class="modal-shell gestao-modal--sm" id="update-choices-modal" data-modal autofocus>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Atualizar recorrencia</h3>
+    </div>
+    <div class="modal-form gestao-choice-modal">
+      <p class="gestao-choice-modal__text">
+        Deseja aplicar a marcacao de recorrencia apenas neste lancamento ou deste lancamento em diante?
+      </p>
+      <div class="gestao-choice-modal__actions">
+        <button type="button" class="panel-action-button gestao-choice-modal__button" data-update-scope="single">Apenas este lancamento</button>
+        <button type="button" class="panel-action-button gestao-choice-modal__button" data-update-scope="future">Este e os proximos</button>
+        <button type="button" class="ghost-button gestao-choice-modal__button" data-modal-close>Cancelar</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- Modal de Transferencia entre Contas -->
+<dialog class="modal-shell" id="transferencia-modal" data-modal autofocus>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="transferencia-modal-title">Transferir entre contas</h3>
+    </div>
+    <form method="post" class="modal-form" id="transferencia-form">
+      {% csrf_token %}
+      <input type="hidden" name="action" id="transferencia_action" value="save_transferencia">
+      <input type="hidden" name="transferencia_id" id="transferencia_id" value="">
+      <input type="hidden" name="aba" value="{{ aba_ativa }}">
+
+      {{ transferencia_form.non_field_errors }}
+
+      {% for field in transferencia_form %}
+        <p>
+          <label for="{{ field.id_for_label }}">{{ field.label }}:</label>
+          {{ field }}
+          {{ field.errors }}
+        </p>
+      {% endfor %}
+
+      <div class="form-actions modal-actions modal-actions--split">
+        <div class="modal-actions__group">
+          <button type="submit">Salvar</button>
+          <button type="button" class="danger-button" id="transferencia_delete_btn" data-submit-delete-transferencia hidden>Excluir</button>
+        </div>
+        <button type="button" class="link-button" data-modal-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+{% include "gestao/partials/_month_picker.html" %}
+
+<!-- Modal de Quitação Rápida (para escolher o banco ao pagar despesa/fatura) -->
+<dialog class="modal-shell gestao-modal--xs" id="quitacao-modal" data-modal autofocus>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Pagar Lançamento</h3>
+    </div>
+    <form method="post" class="modal-form gestao-modal-form">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="toggle">
+      <input type="hidden" name="transacao_id" id="quitacao_transacao_id" value="">
+      <input type="hidden" name="aba" value="{{ aba_ativa }}">
+      
+      <p class="gestao-modal-field">
+        <label for="quitacao_banco_id">Selecione o Banco de Origem:</label>
+        <select name="banco_id" id="quitacao_banco_id" required>
+          <option value="">Selecione...</option>
+          {% for b in bancos_list_options %}
+            <option value="{{ b.id }}">{{ b.nome }}</option>
+          {% endfor %}
+        </select>
+      </p>
+
+      <div class="form-actions modal-actions modal-actions--end">
+        <button type="submit">Confirmar</button>
+        <button type="button" class="link-button" data-modal-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal de Quitação Rápida de Fatura de Cartão -->
+<dialog class="modal-shell gestao-modal--xs" id="quitacao-fatura-modal" data-modal autofocus>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3>Pagar Fatura</h3>
+    </div>
+    <form method="post" class="modal-form gestao-modal-form">
+      {% csrf_token %}
+      <input type="hidden" name="action" value="pay_fatura">
+      <input type="hidden" name="cartao_id" id="quitacao_fatura_cartao_id" value="">
+      <input type="hidden" name="status" value="pago">
+      <input type="hidden" name="mes" id="quitacao_fatura_mes" value="">
+      <input type="hidden" name="ano" id="quitacao_fatura_ano" value="">
+      <input type="hidden" name="aba" value="{{ aba_ativa }}">
+      
+      <p class="gestao-modal-field">
+        <label for="quitacao_fatura_valor">Valor a pagar:</label>
+        <input type="text" name="valor" id="quitacao_fatura_valor" class="money-input" inputmode="numeric" placeholder="0,00" required>
+      </p>
+      
+      <p class="gestao-modal-field">
+        <label for="quitacao_fatura_banco_id">Selecione o Banco de Origem:</label>
+        <select name="banco_id" id="quitacao_fatura_banco_id" required>
+          <option value="">Selecione...</option>
+          {% for b in bancos_list_options %}
+            <option value="{{ b.id }}">{{ b.nome }}</option>
+          {% endfor %}
+        </select>
+      </p>
+
+      <div class="form-actions modal-actions modal-actions--end">
+        <button type="submit">Confirmar</button>
+        <button type="button" class="link-button" data-modal-close>Cancelar</button>
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<!-- Modal de Confirmação de Exclusão de Parcelas -->
+<dialog class="modal-shell gestao-modal--sm" id="delete-choices-modal" data-modal autofocus>
+  <div class="modal-card">
+    <div class="modal-head">
+      <h3 id="delete-choices-title">Excluir Lançamento Parcelado</h3>
+    </div>
+    <div class="modal-form gestao-choice-modal">
+      <p id="delete-choices-text" class="gestao-choice-modal__text">
+        Este lançamento faz parte de uma compra parcelada. Como deseja excluí-lo?
+      </p>
+      <div class="gestao-choice-modal__actions">
+        <button type="button" class="panel-action-button gestao-choice-modal__button" data-delete-scope="single" data-delete-single-label>Apenas esta parcela</button>
+        <button type="button" class="panel-action-button gestao-choice-modal__button" data-delete-scope="future" data-delete-future-label>Esta e as próximas</button>
+        <button type="button" class="panel-action-button gestao-choice-modal__button" data-delete-scope="all" data-delete-all-label>Todas as parcelas do grupo</button>
+        <button type="button" class="ghost-button gestao-choice-modal__button" data-modal-close>Cancelar</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<!-- Modal de Confirmação Customizado (ex: fechamento de cartão) -->
+<dialog class="modal-shell gestao-modal--confirm" id="confirm-modal" data-modal>
+  <div class="modal-card modal-card--confirm">
+    <div class="modal-confirm-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="var(--danger, #ef4444)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
+        <line x1="12" y1="9" x2="12" y2="13"/>
+        <line x1="12" y1="17" x2="12.01" y2="17"/>
+      </svg>
+    </div>
+    <div class="modal-confirm-text" id="confirm-modal-text">
+      <!-- Mensagem injetada por JS -->
+    </div>
+    <div class="form-actions modal-actions modal-actions--confirm">
+      <button type="button" class="modal-confirm-action" id="confirm-modal-ok-btn">Salvar</button>
+      <button type="button" class="link-button modal-confirm-action" id="confirm-modal-extra-btn" data-confirm-extra hidden>Sair sem salvar</button>
+      <button type="button" class="link-button modal-confirm-action" id="confirm-modal-cancel-btn">Cancelar</button>
+    </div>
+  </div>
+</dialog>
+

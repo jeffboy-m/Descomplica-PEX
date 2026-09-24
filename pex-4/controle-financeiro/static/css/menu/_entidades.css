@@ -1,0 +1,210 @@
+.menu-shell {
+  display: grid;
+  gap: 14px;
+}
+
+.cadastro-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 10px 2px 4px;
+}
+
+.cadastro-header h1 {
+  margin: 0;
+  font-size: 1.9rem;
+  line-height: 1.1;
+}
+
+.cadastro-header__meta {
+  margin: 8px 0 0;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.cadastro-header__meta strong {
+  color: var(--text-main);
+}
+
+.cadastro-panel {
+  padding: 18px;
+}
+
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
+}
+
+.category-column-title {
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border-soft);
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.entity-list {
+  display: grid;
+  gap: 2px;
+}
+
+.entity-list--bancos,
+.entity-list--cartoes {
+  grid-column: 1;
+  grid-row: 1;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+  padding: 14px 0 4px;
+}
+
+.entity-list--cartoes {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.entity-list__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 0;
+  padding: 10px 14px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-main);
+  text-align: left;
+  justify-content: flex-start;
+  font: inherit;
+  font-size: 1.04rem;
+  font-weight: 600;
+  transition: background-color var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
+}
+
+.entity-list__category-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: auto;
+  color: inherit;
+  font-size: 0.9rem;
+  flex: 0 0 auto;
+}
+
+.entity-list__item--with-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.entity-list--bancos .entity-list__item--with-logo,
+.entity-list--cartoes .entity-list__item--with-logo {
+  justify-content: flex-start;
+  min-height: 54px;
+  padding: 10px 12px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card-soft);
+  border-radius: var(--control-radius);
+}
+
+.entity-list__logo {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 9px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  padding: 0;
+  flex: 0 0 auto;
+}
+
+.entity-list__logo--cartao {
+  width: 54px;
+  height: 34px;
+  border-radius: 8px;
+}
+
+.entity-list__item:not(.entity-list__item--entrada):not(.entity-list__item--saida):not(.entity-list__item--ambos):hover,
+.entity-list__item--entrada:hover,
+.entity-list__item--saida:hover,
+.entity-list__item--ambos:hover {
+  background: var(--state-hover-bg);
+  color: var(--state-hover-text);
+  transform: translateX(4px);
+}
+
+.entity-list__item--entrada {
+  color: var(--text-main);
+}
+
+.entity-list__item--saida {
+  color: var(--text-main);
+}
+
+.entity-list__item--ambos {
+  color: #3b82f6;
+}
+
+.entity-list__item--inactive {
+  opacity: 0.5;
+  color: var(--text-muted) !important;
+  border-style: dashed !important;
+}
+
+.entity-list__item--inactive:hover {
+  opacity: 0.8;
+}
+
+.panel-action-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--control-height);
+  padding: 0 14px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--brand-strong);
+  font: inherit;
+  font-weight: 650;
+  cursor: pointer;
+}
+
+@media (max-width: 900px) {
+  .cadastro-header {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 10px;
+    padding: 6px 2px 0;
+  }
+
+  .cadastro-header h1 {
+    font-size: 1.55rem;
+  }
+
+  .cadastro-panel {
+    padding: 8px;
+  }
+
+  .entity-list--bancos,
+  .entity-list--cartoes {
+    grid-template-columns: 1fr;
+    padding: 0;
+  }
+
+  .panel-action-button {
+    width: 100%;
+  }
+
+  .row-actions {
+    gap: 6px;
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

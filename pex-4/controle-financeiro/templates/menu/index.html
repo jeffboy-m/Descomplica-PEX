@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static assets %}
+{% load moeda %}
+{% block title %}Cadastros{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% asset 'css/menu/_entidades.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/menu/_logos.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/menu/_modais.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="wrap menu-shell">
+    <div class="modal-state" data-open-modal="{{ open_modal|default:'' }}" hidden></div>
+    {% include "menu/partials/_header.html" %}
+    {% include "menu/partials/_lista.html" %}
+
+    {% include "menu/partials/_modais_detalhe.html" %}
+    {% include "menu/partials/_modais_form.html" %}
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script type="module" src="{% asset 'js/menu/index.js' %}"></script>
+{% endblock %}

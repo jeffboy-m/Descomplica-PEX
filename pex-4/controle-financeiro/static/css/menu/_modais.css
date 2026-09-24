@@ -1,0 +1,118 @@
+#banco-modal,
+#cartao-modal,
+#categoria-modal {
+  max-height: 90vh;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+#banco-modal .modal-card,
+#cartao-modal .modal-card,
+#categoria-modal .modal-card {
+  max-height: 90vh;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+#banco-modal .modal-form,
+#cartao-modal .modal-form,
+#categoria-modal .modal-form {
+  overflow-y: auto;
+  max-height: calc(90vh - 60px);
+}
+
+.category-icon-picker {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 14px;
+}
+
+.category-icon-picker label {
+  margin: 0;
+}
+
+.category-icon-picker__header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.category-icon-picker__current {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card-soft);
+  font-size: 1.35rem;
+}
+
+.category-icon-picker__scroll {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(34px, 1fr));
+  gap: 6px 10px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding: 8px 10px;
+  border: 1px solid var(--border-soft);
+  border-radius: 14px;
+  background: var(--bg-card-soft);
+  scrollbar-width: thin;
+}
+
+.category-icon-picker__option {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 32px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--text-main);
+  font: inherit;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.category-icon-picker__option:hover {
+  border-color: var(--state-hover-border);
+  background: var(--state-hover-bg);
+  color: var(--state-hover-text);
+  transform: translateY(-1px);
+}
+
+.category-icon-picker__option.is-selected {
+  border-color: var(--selection-border);
+  background: var(--selection-bg);
+  color: var(--selection-text);
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .modal-actions {
+    justify-content: stretch;
+  }
+
+  .modal-actions button,
+  .modal-actions .link-button {
+    width: 100%;
+  }
+
+  .modal-shell {
+    width: calc(100vw - 16px);
+    max-height: calc(100vh - 16px);
+    overflow: auto;
+  }
+
+  .category-icon-picker__scroll {
+    grid-template-columns: repeat(auto-fill, minmax(32px, 1fr));
+    max-height: 150px;
+  }
+}

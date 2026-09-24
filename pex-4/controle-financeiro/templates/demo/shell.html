@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}{{ page_title|default:"Controle Financeiro" }}{% endblock %}
+
+{% block content %}
+  <main class="wrap">
+    <header class="cadastro-header">
+      <div>
+        <div class="eyebrow">{{ active_section|default:"Demo" }}</div>
+        <h1>{{ page_title|default:"Controle Financeiro" }}</h1>
+        <p class="cadastro-header__meta">{{ page_subtitle|default:"Versao demonstrativa sem logica real." }}</p>
+      </div>
+    </header>
+
+    <section class="card cadastro-panel">
+      <div class="entity-list">
+        {% for label, value, note in cards %}
+          <button type="button" class="entity-list__item">
+            <span>{{ label }} - {{ value }}</span>
+          </button>
+        {% empty %}
+          <p class="hint">Conteudo demonstrativo indisponivel.</p>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+{% endblock %}

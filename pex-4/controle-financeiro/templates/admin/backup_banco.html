@@ -1,0 +1,61 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block extrastyle %}
+  {{ block.super }}
+  <link rel="stylesheet" href="{% static 'css/admin_backup.css' %}">
+{% endblock %}
+
+{% block breadcrumbs %}
+<div class="breadcrumbs">
+  <a href="{% url 'admin:index' %}">{% translate 'Home' %}</a>
+  &rsaquo; Backup do banco
+</div>
+{% endblock %}
+
+{% block content %}
+<div id="content-main">
+  <div class="module">
+    <h2>Backup do banco de producao</h2>
+    <p>
+      Este download gera um arquivo <strong>.dump</strong> do PostgreSQL usando o <code>pg_dump</code>
+      instalado no servidor.
+    </p>
+
+    <table>
+      <tbody>
+        <tr>
+          <th scope="row">Banco</th>
+          <td>{{ database_name }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Host</th>
+          <td>{{ database_host }}</td>
+        </tr>
+        <tr>
+          <th scope="row">Engine</th>
+          <td>{{ database_engine }}</td>
+        </tr>
+        <tr>
+          <th scope="row">pg_dump</th>
+          <td>{{ pg_dump_version }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    {% if is_postgres %}
+      <form method="post" class="backup-admin-form">
+        {% csrf_token %}
+        <div class="submit-row">
+          <input type="submit" class="default" value="Baixar backup agora">
+        </div>
+      </form>
+    {% else %}
+      <p class="errornote backup-admin-error">
+        O download automatico esta disponivel apenas quando o banco configurado for PostgreSQL.
+      </p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

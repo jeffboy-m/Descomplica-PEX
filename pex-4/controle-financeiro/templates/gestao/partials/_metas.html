@@ -1,0 +1,58 @@
+{% load moeda l10n %}
+
+<form method="post" action="{% url 'gestao-metas' %}" class="metas-layout" data-metas-form>
+  {% csrf_token %}
+  <input type="hidden" name="mes" value="{{ mes }}">
+  <input type="hidden" name="ano" value="{{ ano }}">
+  <input type="hidden" name="next" value="">
+
+  <section class="metas-summary">
+    <div class="metas-summary__item">
+      <span>Renda base</span>
+      <input type="text" name="renda_base_mensal" class="money-input metas-summary__input" inputmode="numeric" value="{{ renda_base_mensal|moeda }}" data-metas-renda>
+    </div>
+    <div class="metas-summary__item">
+      <span>Distribuído</span>
+      <strong data-metas-total>R$ {{ total_metas|moeda }}</strong>
+    </div>
+    <div class="metas-summary__item metas-summary__item--saldo {% if saldo_planejado < 0 %}is-negative{% endif %}">
+      <span>Sobra planejada</span>
+      <strong data-metas-saldo>R$ {{ saldo_planejado|moeda }}</strong>
+    </div>
+    <button type="submit" class="panel-action-button">Salvar metas</button>
+  </section>
+
+  <section class="metas-card">
+    <h3>Categorias de saída</h3>
+    <div class="metas-list">
+      {% for item in metas_linhas %}
+        <div class="metas-row" data-metas-row>
+          <div class="metas-row__label">
+            <strong>{{ item.categoria.nome }}</strong>
+            <span aria-hidden="true">{{ item.categoria.icone }}</span>
+          </div>
+          <div
+            class="metas-row__range"
+            data-metas-range
+            role="slider"
+            tabindex="0"
+            aria-valuemin="0"
+            aria-valuemax="{{ renda_base_mensal|unlocalize }}"
+            aria-valuenow="{{ item.valor|unlocalize }}"
+            aria-label="Meta de {{ item.categoria.nome }}"
+          ></div>
+          <div class="metas-row__percent" data-metas-percent>
+            {% if item.percentual is not None %}
+              {{ item.percentual|floatformat:1 }}%
+            {% else %}
+              -
+            {% endif %}
+          </div>
+          <input type="text" name="meta_{{ item.categoria.id }}" class="money-input metas-row__input" inputmode="numeric" value="{{ item.valor|moeda }}" data-metas-value>
+        </div>
+      {% empty %}
+        <p class="hint">Nenhuma categoria de saída ativa.</p>
+      {% endfor %}
+    </div>
+  </section>
+</form>

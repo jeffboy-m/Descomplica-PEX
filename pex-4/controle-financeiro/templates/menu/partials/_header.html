@@ -1,0 +1,17 @@
+<header class="cadastro-header">
+  <div>
+    <div class="eyebrow">Cadastros</div>
+    <h1>{{ cadastro_titulo }}</h1>
+    {% if cadastro_tipo == "bancos" %}
+      <p class="cadastro-header__meta">Patrimônio inicial: <strong>R$ {{ patrimonio_total_inicial }}</strong></p>
+    {% endif %}
+  </div>
+
+  {% if cadastro_tipo == "bancos" %}
+    <button type="button" class="panel-action-button" data-modal-open="banco-modal" data-menu-create="banco">Cadastrar</button>
+  {% elif cadastro_tipo == "cartoes" %}
+    <button type="button" class="panel-action-button" data-modal-open="cartao-modal" data-menu-create="cartao">Cadastrar</button>
+  {% else %}
+    <button type="button" class="panel-action-button" data-modal-open="categoria-modal" data-menu-create="categoria">Cadastrar</button>
+  {% endif %}
+</header>

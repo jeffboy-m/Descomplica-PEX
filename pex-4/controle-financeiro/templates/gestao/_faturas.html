@@ -1,0 +1,73 @@
+{% load moeda %}
+{% load static %}
+
+<section id="faturas-section" data-refresh-region="gestao-faturas">
+  <h3 class="faturas-section__title">Faturas de Cartoes</h3>
+
+  <div class="faturas-grid">
+    {% for f in faturas_lista %}
+      <div class="fatura-card">
+        <div class="fatura-card__main">
+          <div class="card-logo-icon">
+            {% if f.cartao_logo %}
+              <img src="{% static f.cartao_logo %}" alt="{{ f.cartao_nome }}">
+            {% else %}
+              Cartao
+            {% endif %}
+          </div>
+
+          <div class="fatura-card__info">
+            <strong class="fatura-card__name">{{ f.cartao_nome }}</strong>
+            <span class="fatura-card__venc"><span class="venc-lbl">Venc.:</span> {{ f.vencimento_data|date:"d/m/Y" }}</span>
+
+            {% if f.banco_nome %}
+              <span class="transaction-item__source fatura-card__source">
+                {{ f.banco_nome }}
+              </span>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="fatura-card__summary">
+          <strong class="fatura-card__amount">
+            {% if f.status == 'pago' %}R$ {{ f.valor_total|moeda }}{% else %}R$ {{ f.saldo_pendente|moeda }}{% endif %}
+          </strong>
+
+          {% if f.valor_pago > 0 %}
+            <span class="fatura-card__meta">Pago: R$ {{ f.valor_pago|moeda }} de R$ {{ f.valor_total|moeda }}</span>
+          {% elif f.valor_total > 0 %}
+            <span class="fatura-card__meta">Total: R$ {{ f.valor_total|moeda }}</span>
+          {% endif %}
+
+          {% if f.valor_total > 0 %}
+            {% if f.status == 'pago' %}
+              <form method="post" class="fatura-card__form">
+                {% csrf_token %}
+                <input type="hidden" name="action" value="pay_fatura">
+                <input type="hidden" name="cartao_id" value="{{ f.cartao_id }}">
+                <input type="hidden" name="status" value="a_pagar">
+                <input type="hidden" name="mes" value="{{ mes }}">
+                <input type="hidden" name="ano" value="{{ ano }}">
+                <input type="hidden" name="valor" value="{{ f.valor_total|stringformat:'.2f' }}">
+                <input type="hidden" name="aba" value="{{ aba_ativa }}">
+                <button type="submit" class="fatura-card__status fatura-card__status--paid" title="Estornar pagamento da fatura">
+                  Pago
+                </button>
+              </form>
+            {% else %}
+              <button type="button" class="fatura-card__status fatura-card__status--due" data-quick-pay-fatura data-cartao-id="{{ f.cartao_id }}" data-mes="{{ mes }}" data-ano="{{ ano }}" data-valor="{{ f.saldo_pendente|stringformat:'.2f' }}" title="Pagar fatura escolhendo banco">
+                {% if f.status == 'parcial' %}Parcial{% else %}A pagar{% endif %}
+              </button>
+            {% endif %}
+          {% else %}
+            <span class="fatura-card__status fatura-card__status--empty">Sem compras</span>
+          {% endif %}
+        </div>
+      </div>
+    {% empty %}
+      <p class="hint faturas-grid__empty">Nenhum cartao cadastrado.</p>
+    {% endfor %}
+  </div>
+
+  <hr class="faturas-section__divider">
+</section>

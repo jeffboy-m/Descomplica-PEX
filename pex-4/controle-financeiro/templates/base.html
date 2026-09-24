@@ -1,0 +1,305 @@
+{% load static assets %}
+<!DOCTYPE html>
+<html lang="pt-br"{% if not user.is_authenticated and not demo_mode %} class="auth-public"{% endif %}>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <script>
+    (function () {
+      const navigationEntry = performance.getEntriesByType && performance.getEntriesByType("navigation")[0];
+      const isReload = navigationEntry ? navigationEntry.type === "reload" : performance.navigation && performance.navigation.type === 1;
+      if (isReload && location.pathname === "/gestao/") {
+        const url = new URL(location.href);
+        if (url.searchParams.has("mes") || url.searchParams.has("ano")) {
+          url.searchParams.delete("mes");
+          url.searchParams.delete("ano");
+          location.replace(url.pathname + url.search + url.hash);
+          return;
+        }
+      }
+
+      const storageKey = "controle-financeiro-theme";
+      const saved = localStorage.getItem(storageKey);
+      const theme = (saved === "light" || saved === "dark") ? saved : (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+      document.documentElement.dataset.theme = theme;
+      {% if user.is_authenticated or demo_mode %}
+        const navPinnedPreference = localStorage.getItem("controle-financeiro-nav-pinned");
+        const canPinNav = window.matchMedia("(min-width: 960px)").matches;
+        if (canPinNav && navPinnedPreference !== "0") {
+          document.documentElement.classList.add("nav-pinned");
+        }
+      {% else %}
+        document.documentElement.classList.remove("nav-pinned", "nav-open");
+      {% endif %}
+
+      try {
+        const scrollKey = "page-scroll-state:" + window.location.pathname + window.location.search;
+        if (sessionStorage.getItem(scrollKey)) {
+          history.scrollRestoration = "manual";
+          document.documentElement.classList.add("is-restoring-scroll");
+        }
+      } catch (error) {
+        document.documentElement.classList.remove("is-restoring-scroll");
+      }
+    })();
+  </script>
+  <meta name="theme-color" content="#f5f7f4">
+  <title>{% block title %}Controle Financeiro{% endblock %}</title>
+  {% static_version as app_static_version %}
+
+  <!-- PWA Support -->
+  <link rel="manifest" href="/manifest.json{% if app_static_version %}?v={{ app_static_version|urlencode }}{% endif %}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{% asset 'icon/favicon-32x32.png' %}">
+  
+  <!-- Apple Mobile Support (iOS) -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Financeiro">
+  <link rel="apple-touch-icon" href="{% asset 'icon/icon-192x192.png' %}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% asset 'css/theme.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/base.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/modais.css' %}">
+  <script type="importmap">
+    {
+      "imports": {
+        "app/gestao/abas": "{% asset 'js/gestao/abas.js' %}",
+        "app/gestao/extrato": "{% asset 'js/gestao/extrato.js' %}",
+        "app/gestao/navegacao": "{% asset 'js/gestao/navegacao.js' %}",
+        "app/gestao/refresh-regions": "{% asset 'js/gestao/refresh-regions.js' %}"
+      }
+    }
+  </script>
+  {% block extra_css %}{% endblock %}
+
+</head>
+<body>
+  <div class="app-shell">
+    {% if user.is_authenticated or demo_mode %}
+      <div class="app-toolbar">
+        <button class="menu-toggle" type="button" data-nav-open aria-label="Abrir menu">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <div class="app-toolbar-actions">
+          <button class="theme-toggle" type="button" data-theme-toggle aria-pressed="false" aria-label="Alternar tema">
+            <span class="theme-toggle__track">
+              <span class="theme-toggle__thumb" aria-hidden="true">
+                <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀</span>
+                <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">☾</span>
+              </span>
+            </span>
+          </button>
+          <button class="ghost-button user-logout" type="button" data-user-open>{% if demo_mode and not user.is_authenticated %}{{ demo_user_label }}{% else %}{{ user.nome|default:user.email }}{% endif %}</button>
+          <button class="notification-bell{% if notificacoes_tem_nao_lida %} notification-bell--unread{% endif %}" type="button" data-notification-toggle aria-label="Abrir notificações" aria-expanded="false" aria-controls="global-notifications-panel">
+            <span class="notification-bell__icon" aria-hidden="true">
+              <svg width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 8a6 6 0 1 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"></path>
+                <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+              </svg>
+            </span>
+            <span class="notification-bell__dot" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+
+      <section class="notifications-panel" id="global-notifications-panel" data-notifications-panel hidden>
+        <div class="notifications-panel__head">
+          <strong>Notificações</strong>
+          <span data-notifications-summary>{% if notificacoes_tem_nao_lida %}Novas pendências{% else %}Tudo em dia{% endif %}</span>
+        </div>
+        <div class="notifications-panel__push" data-push-notifications-box hidden>
+          <span data-push-notifications-status>Receba avisos na tela de bloqueio.</span>
+          <button type="button" data-push-notifications-toggle>Ativar</button>
+        </div>
+        <div class="notifications-panel__list">
+          {% for notificacao in notificacoes_itens %}
+            <div class="notification-item{% if not notificacao.lida %} notification-item--unread{% endif %}" data-notification-item data-notification-id="{{ notificacao.id }}">
+              <a class="notification-item__link" href="{{ notificacao.url_destino|default:'/gestao/' }}" data-no-global-loader data-notification-read="{{ notificacao.id }}" data-notification-open="0">
+                <span class="notification-item__dot" aria-hidden="true"></span>
+                <span class="notification-item__body">
+                  <strong>{{ notificacao.titulo }}</strong>
+                  <span>{{ notificacao.mensagem }}</span>
+                </span>
+              </a>
+              <button class="notification-item__clear" type="button" data-notification-clear="{{ notificacao.id }}" aria-label="Limpar notificação">×</button>
+            </div>
+          {% empty %}
+            <p class="notifications-panel__empty">Nenhum aviso por enquanto.</p>
+          {% endfor %}
+        </div>
+      </section>
+
+      {% if notificacao_banner %}
+        <aside class="notification-toast" data-notification-banner data-notification-id="{{ notificacao_banner.id }}">
+          <div class="notification-toast__body">
+            <strong>{{ notificacao_banner.titulo }}</strong>
+            <span>{{ notificacao_banner.mensagem }}</span>
+          </div>
+          <a class="notification-toast__link" href="{{ notificacao_banner.url_destino|default:'/gestao/' }}" data-no-global-loader data-notification-read="{{ notificacao_banner.id }}" data-notification-open="1">Ver</a>
+          <button class="notification-toast__close" type="button" data-notification-banner-close aria-label="Fechar notificação">×</button>
+        </aside>
+      {% endif %}
+    {% endif %}
+
+    {% if messages %}
+      <div class="messages-container">
+        {% for message in messages %}
+          <div class="alert alert--{{ message.tags }}">
+            <span>{{ message }}</span>
+            <button type="button" class="alert__close" data-alert-close>&times;</button>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+    {% block content %}{% endblock %}
+  </div>
+
+
+  {% if user.is_authenticated or demo_mode %}
+    <div class="nav-backdrop" data-nav-backdrop hidden></div>
+    <aside class="nav-shell" id="global-nav-dialog" aria-labelledby="global-nav-title" aria-hidden="true">
+      <div class="nav-card">
+        <div class="nav-card__head">
+          <div>
+            <span class="nav-card__eyebrow">Controle financeiro</span>
+            <h2 id="global-nav-title">Navegação</h2>
+          </div>
+          <div class="nav-card__actions">
+            <button type="button" class="nav-card__pin" data-nav-pin aria-label="Fixar menu" title="Fixar menu" aria-pressed="false">📌</button>
+            <button type="button" class="nav-card__close" data-nav-close aria-label="Fechar menu">×</button>
+          </div>
+        </div>
+
+        <div class="nav-card__body">
+          <section class="nav-group" aria-label="Principal">
+            <span class="nav-group__label">Principal</span>
+            {% if user.is_superuser %}
+              <a class="nav-item{% if request.path == '/admin/' %} is-active{% endif %}" href="/admin/" data-nav-link data-nav-path="/admin/">
+                <span class="nav-item__icon" aria-hidden="true">⚙</span>
+                <span>Admin</span>
+              </a>
+            {% endif %}
+            <a class="nav-item{% if request.path == '/anual/' %} is-active{% endif %}" href="/anual/" data-nav-link data-nav-path="/anual/">
+              <span class="nav-item__icon" aria-hidden="true">↗</span>
+              <span>Anual</span>
+            </a>
+          </section>
+
+          <section class="nav-group" aria-label="Atalhos da Gestão">
+            <span class="nav-group__label">Gestão</span>
+            {% with active_gestao_tab=request.GET.aba|default:"extrato" %}
+              <a class="nav-item nav-item--sub{% if request.path == '/gestao/' and active_gestao_tab == 'extrato' %} is-active{% endif %}" href="/gestao/{% if mes and ano %}?mes={{ mes }}&amp;ano={{ ano }}&amp;aba=extrato{% else %}?aba=extrato{% endif %}" data-nav-link data-gestao-tab-link="extrato">
+                <span class="nav-item__icon" aria-hidden="true">▤</span>
+                <span>Extrato</span>
+              </a>
+              <a class="nav-item nav-item--sub{% if request.path == '/gestao/' and active_gestao_tab == 'entrada' %} is-active{% endif %}" href="/gestao/{% if mes and ano %}?mes={{ mes }}&amp;ano={{ ano }}&amp;aba=entrada{% else %}?aba=entrada{% endif %}" data-nav-link data-gestao-tab-link="entrada">
+                <span class="nav-item__icon nav-item__icon--entrada" aria-hidden="true">●</span>
+                <span>Receitas</span>
+              </a>
+              <a class="nav-item nav-item--sub{% if request.path == '/gestao/' and active_gestao_tab == 'saida' %} is-active{% endif %}" href="/gestao/{% if mes and ano %}?mes={{ mes }}&amp;ano={{ ano }}&amp;aba=saida{% else %}?aba=saida{% endif %}" data-nav-link data-gestao-tab-link="saida">
+                <span class="nav-item__icon nav-item__icon--saida" aria-hidden="true">●</span>
+                <span>Despesas</span>
+              </a>
+              <a class="nav-item nav-item--sub{% if request.path == '/gestao/' and active_gestao_tab == 'cartao' %} is-active{% endif %}" href="/gestao/{% if mes and ano %}?mes={{ mes }}&amp;ano={{ ano }}&amp;aba=cartao{% else %}?aba=cartao{% endif %}" data-nav-link data-gestao-tab-link="cartao">
+                <span class="nav-item__icon" aria-hidden="true">▭</span>
+                <span>Cartão</span>
+              </a>
+              <a class="nav-item nav-item--sub{% if request.path == '/gestao/' and active_gestao_tab == 'transferencia' %} is-active{% endif %}" href="/gestao/{% if mes and ano %}?mes={{ mes }}&amp;ano={{ ano }}&amp;aba=transferencia{% else %}?aba=transferencia{% endif %}" data-nav-link data-gestao-tab-link="transferencia">
+                <span class="nav-item__icon" aria-hidden="true">⇄</span>
+                <span>Transf. entre contas</span>
+              </a>
+              <a class="nav-item nav-item--sub{% if request.path == '/gestao/' and active_gestao_tab == 'metas' %} is-active{% endif %}" href="/gestao/{% if mes and ano %}?mes={{ mes }}&amp;ano={{ ano }}&amp;aba=metas{% else %}?aba=metas{% endif %}" data-nav-link data-gestao-tab-link="metas">
+                <span class="nav-item__icon" aria-hidden="true">▰</span>
+                <span>Metas</span>
+              </a>
+            {% endwith %}
+          </section>
+
+          <section class="nav-group" aria-label="Cadastros">
+            <span class="nav-group__label">Cadastros</span>
+            <a class="nav-item nav-item--sub{% if request.path == '/menu/bancos/' %} is-active{% endif %}" href="/menu/bancos/" data-nav-link data-nav-path="/menu/bancos/">
+              <span class="nav-item__icon" aria-hidden="true">▣</span>
+              <span>Bancos</span>
+            </a>
+            <a class="nav-item nav-item--sub{% if request.path == '/menu/cartoes/' %} is-active{% endif %}" href="/menu/cartoes/" data-nav-link data-nav-path="/menu/cartoes/">
+              <span class="nav-item__icon" aria-hidden="true">▭</span>
+              <span>Cartões</span>
+            </a>
+            <a class="nav-item nav-item--sub{% if request.path == '/menu/categorias/' %} is-active{% endif %}" href="/menu/categorias/" data-nav-link data-nav-path="/menu/categorias/">
+              <span class="nav-item__icon" aria-hidden="true">◇</span>
+              <span>Categorias</span>
+            </a>
+          </section>
+        </div>
+      </div>
+    </aside>
+
+    <dialog class="user-shell" id="global-user-dialog" aria-labelledby="global-user-title">
+      <div class="user-card">
+        <div class="nav-links">
+          <a class="user-menu-link" href="{% url 'password_change' %}">Alterar Senha</a>
+          <form method="post" action="{% url 'logout' %}">
+            {% csrf_token %}
+            <button class="nav-plain-button" type="submit">Sair</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+  {% endif %}
+
+  <dialog class="confirm-shell" id="global-confirm-dialog" aria-labelledby="global-confirm-title">
+    <form method="dialog" class="confirm-card">
+      <h3 id="global-confirm-title">Confirmar ação</h3>
+      <p class="confirm-message" data-confirm-message>Tem certeza que deseja continuar?</p>
+      <div class="confirm-actions">
+        <button type="button" class="danger-button" data-confirm-ok>OK</button>
+        <button type="button" class="ghost-button" data-confirm-cancel>Cancelar</button>
+        <button type="button" class="ghost-button" data-confirm-extra hidden>Sair sem salvar</button>
+      </div>
+    </form>
+  </dialog>
+
+  <!-- Assistente de Instalação iOS PWA -->
+  <div id="ios-install-prompt" class="ios-prompt-container" hidden>
+    <div class="ios-prompt-card">
+      <div class="ios-prompt-header">
+        <div class="app-info">
+          <img src="{% asset 'icon/icon-192x192.png' %}" alt="Logo" class="app-icon-mini">
+          <span>Instalar Controle Financeiro</span>
+        </div>
+        <button type="button" class="btn-close" data-ios-prompt-close>
+          &times;
+        </button>
+      </div>
+      
+      <div class="ios-prompt-body">
+        <p>Acesse rápido seus lançamentos diretamente da tela inicial do celular:</p>
+        <ol>
+          <li>Toque no ícone de <strong>Compartilhar</strong> (no Safari abaixo) ou envie para a tela de início.</li>
+          <li>Selecione a opção <strong>"Adicionar à Tela de Início"</strong>.</li>
+        </ol>
+      </div>
+      <div class="ios-prompt-arrow"></div>
+    </div>
+  </div>
+
+  <script src="{% asset 'js/theme.js' %}"></script>
+  <script src="{% asset 'js/base/base.js' %}"></script>
+  <script src="{% asset 'js/base/carregamento.js' %}"></script>
+  <script src="{% asset 'js/base/navegacao.js' %}"></script>
+  <script src="{% asset 'js/base/refresh.js' %}"></script>
+  <script src="{% asset 'js/base/modais.js' %}"></script>
+  <script src="{% asset 'js/base/mascaras.js' %}"></script>
+  <script src="{% asset 'js/base/notificacoes.js' %}"></script>
+  <script src="{% asset 'js/base/pwa.js' %}"></script>
+  <script src="{% asset 'js/base/ios.js' %}"></script>
+  {% block extra_js %}{% endblock %}
+</body>
+</html>
+

@@ -1,0 +1,131 @@
+{% load static moeda %}
+
+{% if cadastro_tipo == "bancos" %}
+  {% for banco in bancos %}
+    <dialog class="modal-shell detail-modal" id="banco-detail-{{ banco.id }}" data-modal>
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>{{ banco.nome }}</h3>
+        </div>
+        <div class="detail-body">
+          <dl class="detail-list">
+            <div>
+              <dt>Logo</dt>
+              <dd>
+                {% if banco.logo %}
+                  <img class="logo" src="{% static banco.logo %}" alt="{{ banco.nome }}">
+                {% else %}
+                  <span class="hint">Sem logo</span>
+                {% endif %}
+              </dd>
+            </div>
+            <div>
+              <dt>Saldo inicial</dt>
+              <dd>R$ {{ banco.saldo_inicial }}</dd>
+            </div>
+          </dl>
+          <div class="row-actions detail-actions">
+            <button type="button" class="table-link" data-menu-edit="banco" data-target-modal="banco-modal" data-id="{{ banco.id }}" data-nome="{{ banco.nome }}" data-saldo-inicial="{{ banco.saldo_inicial|stringformat:'.2f' }}" data-logo="{{ banco.logo }}">Editar</button>
+            <form method="post" class="inline-delete-form" data-confirm-delete="Tem certeza que deseja deletar este banco?">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="delete_banco">
+              <input type="hidden" name="banco_id" value="{{ banco.id }}">
+              <button type="submit" class="danger-button">Deletar</button>
+            </form>
+            <button type="button" class="ghost-button" data-modal-close>Fechar</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  {% endfor %}
+{% endif %}
+
+{% if cadastro_tipo == "cartoes" %}
+  {% for cartao in cartoes %}
+    <dialog class="modal-shell detail-modal" id="cartao-detail-{{ cartao.id }}" data-modal>
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>{{ cartao.nome }}</h3>
+        </div>
+        <div class="detail-body">
+          <dl class="detail-list">
+            <div>
+              <dt>Logo</dt>
+              <dd>
+                {% if cartao.logo %}
+                  <img class="logo" src="{% static cartao.logo %}" alt="{{ cartao.nome }}">
+                {% else %}
+                  <span class="hint">Sem logo</span>
+                {% endif %}
+              </dd>
+            </div>
+            <div>
+              <dt>Fechamento</dt>
+              <dd>Dia {{ cartao.dia_fechamento }}</dd>
+            </div>
+            <div>
+              <dt>Limite total</dt>
+              <dd>R$ {{ cartao.limite_total|moeda }}</dd>
+            </div>
+            <div>
+              <dt>Vencimento</dt>
+              <dd>Dia {{ cartao.dia_vencimento }}</dd>
+            </div>
+          </dl>
+          <div class="row-actions detail-actions">
+            <button type="button" class="table-link" data-menu-edit="cartao" data-target-modal="cartao-modal" data-id="{{ cartao.id }}" data-nome="{{ cartao.nome }}" data-limite-total="{{ cartao.limite_total|stringformat:'.2f' }}" data-dia-fechamento="{{ cartao.dia_fechamento }}" data-dia-vencimento="{{ cartao.dia_vencimento }}" data-logo="{{ cartao.logo }}">Editar</button>
+            <form method="post" class="inline-delete-form" data-confirm-delete="Tem certeza que deseja deletar este cartao?">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="delete_cartao">
+              <input type="hidden" name="cartao_id" value="{{ cartao.id }}">
+              <button type="submit" class="danger-button">Deletar</button>
+            </form>
+            <button type="button" class="ghost-button" data-modal-close>Fechar</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  {% endfor %}
+{% endif %}
+
+{% if cadastro_tipo == "categorias" %}
+  {% for categoria in categorias %}
+    <dialog class="modal-shell detail-modal" id="categoria-detail-{{ categoria.id }}" data-modal>
+      <div class="modal-card">
+        <div class="modal-head">
+          <h3>{{ categoria.nome }}</h3>
+        </div>
+        <div class="detail-body">
+          <dl class="detail-list">
+            <div>
+              <dt>Ícone</dt>
+              <dd>{{ categoria.icone }}</dd>
+            </div>
+            <div>
+              <dt>Lado padrao</dt>
+              <dd>{{ categoria.get_lado_padrao_display }}</dd>
+            </div>
+            <div>
+              <dt>Resultado</dt>
+              <dd>{{ categoria.afeta_resultado|yesno:"Sim,Nao" }}</dd>
+            </div>
+            <div>
+              <dt>Ativo</dt>
+              <dd>{{ categoria.ativo|yesno:"Sim,Nao" }}</dd>
+            </div>
+          </dl>
+          <div class="row-actions detail-actions">
+            <button type="button" class="table-link" data-menu-edit="categoria" data-target-modal="categoria-modal" data-id="{{ categoria.id }}" data-nome="{{ categoria.nome }}" data-icone="{{ categoria.icone }}" data-lado-padrao="{{ categoria.lado_padrao }}" data-afeta-resultado="{{ categoria.afeta_resultado|yesno:'true,false' }}" data-ativo="{{ categoria.ativo|yesno:'true,false' }}">Editar</button>
+            <form method="post" class="inline-delete-form" data-confirm-delete="Tem certeza que deseja deletar esta categoria?">
+              {% csrf_token %}
+              <input type="hidden" name="action" value="delete_categoria">
+              <input type="hidden" name="categoria_id" value="{{ categoria.id }}">
+              <button type="submit" class="danger-button">Deletar</button>
+            </form>
+            <button type="button" class="ghost-button" data-modal-close>Fechar</button>
+          </div>
+        </div>
+      </div>
+    </dialog>
+  {% endfor %}
+{% endif %}

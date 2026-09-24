@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Convite indisponivel{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="wrap login-wrap">
+    <section class="card login-card">
+      <div class="eyebrow">Convite</div>
+      <h1>Convite indisponivel</h1>
+      <p class="hint">
+        Este convite ja foi usado ou expirou. Solicite um novo acesso ao administrador.
+      </p>
+      <a class="button-link" href="{% url 'login' %}">Voltar para o login</a>
+    </section>
+  </div>
+{% endblock %}

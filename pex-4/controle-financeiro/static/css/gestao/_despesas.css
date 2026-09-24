@@ -1,0 +1,218 @@
+/* Aba Despesas & Faturas de Cartao */
+.transaction-item__value--saida {
+  color: var(--text-main);
+}
+
+#faturas-section {
+  margin-bottom: 20px;
+}
+
+.faturas-section__title {
+  margin-bottom: 12px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.faturas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 12px;
+}
+
+.faturas-grid__empty {
+  grid-column: 1 / -1;
+  margin: 0;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.faturas-section__divider {
+  margin: 20px 0 10px;
+  border: 0;
+  border-top: 1px dashed var(--border-soft);
+}
+
+.fatura-card {
+  min-height: 76px;
+  padding: 0 16px 0 12px;
+  overflow: hidden;
+  box-sizing: border-box;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--control-radius);
+  box-shadow: var(--shadow-soft);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.fatura-card__main {
+  min-height: 60px;
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.fatura-card__main .card-logo-icon {
+  width: 96px;
+  height: 100%;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.fatura-card__main .card-logo-icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.fatura-card__info {
+  min-width: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.fatura-card__name,
+.fatura-card__venc,
+.fatura-card__source {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.fatura-card__name {
+  color: var(--text-main);
+  font-size: 0.85rem;
+}
+
+.fatura-card__venc {
+  color: var(--text-sub);
+  font-size: 0.72rem;
+}
+
+.fatura-card__summary {
+  display: flex;
+  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  text-align: right;
+}
+
+.fatura-card__amount {
+  margin-bottom: 2px;
+  color: var(--text-main);
+  font-size: 0.88rem;
+  white-space: nowrap;
+}
+
+.fatura-card__meta {
+  color: var(--text-muted);
+  font-size: 0.66rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.fatura-card__form {
+  display: inline-flex;
+  margin: 0;
+}
+
+.fatura-card__status {
+  min-height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 4px 10px;
+  border: none;
+  border-radius: 999px;
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 500;
+  line-height: 1.1;
+  white-space: nowrap;
+  transition: opacity 0.2s;
+}
+
+button.fatura-card__status {
+  cursor: pointer;
+}
+
+.fatura-card__status--paid {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--brand);
+}
+
+.fatura-card__status--due {
+  background: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+}
+
+.fatura-card__status--empty {
+  border: 1px solid var(--badge-border);
+  background: var(--badge-bg);
+  color: var(--badge-text);
+}
+
+.fatura-card span {
+  white-space: nowrap;
+}
+
+@media (max-width: 600px) {
+  .fatura-card {
+    min-height: 76px;
+    gap: 8px;
+    padding-right: 12px;
+  }
+
+  .fatura-card__main .card-logo-icon {
+    width: 96px;
+    height: 100%;
+    border-radius: 6px;
+  }
+
+  .fatura-card__main {
+    gap: 8px;
+  }
+
+  .fatura-card__main strong {
+    font-size: 0.85rem;
+  }
+
+  .fatura-card__main span {
+    font-size: 0.72rem;
+  }
+
+  .venc-lbl {
+    display: none;
+  }
+
+  .fatura-card select {
+    max-width: 90px;
+    padding: 2px 4px;
+    font-size: 0.68rem;
+  }
+
+  .fatura-card__status {
+    min-height: 22px;
+    padding: 3px 8px;
+  }
+
+}

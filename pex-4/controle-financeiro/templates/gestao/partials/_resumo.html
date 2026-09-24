@@ -1,0 +1,39 @@
+{% load moeda %}
+
+<div class="summary-card summary-card--saldo">
+  <span class="summary-card__label">Saldo Acumulado</span>
+  <strong class="summary-card__value" data-summary-field="saldo-valor">R$ {{ saldo_atual|moeda }}</strong>
+  <span class="summary-card__pending summary-card__pending--muted" data-summary-field="saldo-pendente">Previsão: R$ {{ saldo_projetado|moeda }}</span>
+</div>
+<div class="summary-card summary-card--receitas">
+  <span class="summary-card__label">Receitas do Mês</span>
+  <strong class="summary-card__value" data-summary-field="receitas-valor">R$ {{ receitas_mes|moeda }}</strong>
+  {% if a_receber_total > 0 %}
+    <span class="summary-card__pending" data-summary-field="receitas-pendente">A receber: R$ {{ a_receber_total|moeda }}</span>
+  {% else %}
+    <span class="summary-card__pending summary-card__pending--quiet" data-summary-field="receitas-pendente">Tudo recebido</span>
+  {% endif %}
+</div>
+<div class="summary-card summary-card--despesas">
+  <span class="summary-card__label">Despesas do Mês</span>
+  <strong class="summary-card__value" data-summary-field="despesas-valor">R$ {{ despesas_mes|moeda }}</strong>
+  {% if a_pagar_total > 0 %}
+    <span class="summary-card__pending" data-summary-field="despesas-pendente">A pagar: R$ {{ a_pagar_total|moeda }}</span>
+  {% else %}
+    <span class="summary-card__pending summary-card__pending--quiet" data-summary-field="despesas-pendente">Tudo pago</span>
+  {% endif %}
+</div>
+<div class="summary-card summary-card--lucro">
+  <span class="summary-card__label">Lucro do Mês</span>
+  <strong class="summary-card__value {% if lucro_realizado >= 0 %}is-positive{% else %}is-negative{% endif %}" data-summary-field="lucro-valor">
+    R$ {{ lucro_realizado|moeda }}
+  </strong>
+  <span class="summary-card__pending {% if lucro_projetado >= 0 %}is-positive{% else %}is-negative{% endif %}" data-summary-field="lucro-pendente">
+    A lucrar: R$ {{ lucro_projetado|moeda }}
+  </span>
+</div>
+<div class="summary-card summary-card--cartao">
+  <span class="summary-card__label">Fatura de Cartão</span>
+  <strong class="summary-card__value" data-summary-field="cartao-valor">R$ {{ cartao_mes|moeda }}</strong>
+  <span class="summary-card__pending summary-card__pending--quiet" data-summary-field="cartao-pendente">No crédito</span>
+</div>

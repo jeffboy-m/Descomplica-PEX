@@ -1,0 +1,239 @@
+.metas-shell {
+  max-width: 1180px;
+}
+
+.metas-layout {
+  display: grid;
+  gap: 18px;
+}
+
+.metas-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+  gap: 12px;
+  align-items: center;
+}
+
+.metas-summary > .panel-action-button {
+  min-height: var(--control-height);
+  align-self: center;
+}
+
+.metas-summary__item,
+.metas-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--control-radius);
+  box-shadow: var(--shadow-soft);
+}
+
+.metas-summary__item {
+  display: grid;
+  gap: 6px;
+  padding: 14px 16px;
+}
+
+.metas-summary__item span {
+  color: var(--text-muted);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.metas-summary__item strong,
+.metas-summary__input {
+  color: var(--text-main);
+  font-size: 1.12rem;
+  font-weight: 800;
+}
+
+.metas-summary__input {
+  width: 100%;
+  padding: 0;
+  background: transparent;
+  border: 0;
+}
+
+.metas-summary__item--saldo.is-negative strong {
+  color: var(--danger);
+}
+
+.metas-card {
+  padding: 18px;
+}
+
+.metas-card h3 {
+  margin: 0 0 16px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.metas-list {
+  display: grid;
+  gap: 0;
+}
+
+.metas-row {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(180px, 2fr) 72px 150px;
+  gap: 12px;
+  align-items: center;
+  padding: 6px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.metas-row:last-child {
+  border-bottom: 0;
+}
+
+.metas-row__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.metas-row__label strong {
+  overflow: hidden;
+  color: var(--text-main);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.metas-row__range {
+  --range-fill: var(--text-muted);
+  --range-percent: 0%;
+  position: relative;
+  display: block;
+  min-width: 0;
+  height: 28px;
+  align-self: center;
+  background: none;
+  cursor: pointer;
+}
+
+.metas-row__range:focus,
+.metas-row__range:focus-visible {
+  outline: 0;
+}
+
+.metas-row__range::before {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 12px;
+  border: 1px solid var(--border-soft);
+  border-radius: 0;
+  background: var(--bg-page);
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.metas-row__range::after {
+  content: "";
+  position: absolute;
+  inset: 50% 0 auto;
+  height: 12px;
+  clip-path: inset(0 calc(100% - var(--range-percent)) 0 0 round 0 999px 999px 0);
+  background: linear-gradient(
+    90deg,
+    var(--brand) 0%,
+    var(--brand) 42%,
+    #84cc16 58%,
+    #eab308 72%,
+    #f97316 88%,
+    #ef4444 100%
+  );
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.metas-row.is-empty .metas-row__range {
+  --range-fill: var(--text-muted);
+}
+
+.metas-row.is-low .metas-row__range {
+  --range-fill: #60a5fa;
+}
+
+.metas-row.is-ok .metas-row__range {
+  --range-fill: var(--brand);
+}
+
+.metas-row.is-attention .metas-row__range {
+  --range-fill: #f59e0b;
+}
+
+.metas-row.is-danger .metas-row__range {
+  --range-fill: var(--danger);
+}
+
+.metas-row__percent {
+  color: var(--text-sub);
+  font-size: 0.8rem;
+  font-weight: 800;
+  align-self: center;
+  text-align: right;
+}
+
+input.metas-row__input {
+  width: 100%;
+  min-height: 36px;
+  align-self: center;
+  padding: 8px 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: var(--text-main);
+  font: inherit;
+  font-weight: 800;
+  text-align: right;
+}
+
+@media (min-width: 761px) {
+  .metas-row__input {
+    transform: translateY(4px);
+  }
+}
+
+@media (max-width: 760px) {
+  .metas-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .metas-row {
+    grid-template-columns: minmax(0, 1fr) 96px;
+    gap: 6px 12px;
+    padding: 8px 0;
+  }
+
+  .metas-row__range {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .metas-row__percent {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: end;
+    text-align: right;
+  }
+
+  .metas-row__input {
+    grid-column: 2;
+    grid-row: 1;
+    width: 100%;
+    min-height: 32px;
+    padding: 6px 0;
+    font-size: 0.92rem;
+    justify-self: end;
+  }
+}

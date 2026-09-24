@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static assets %}
+{% load moeda %}
+{% block title %}Painel Anual Consolidado - {{ ano }}{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% asset 'css/gestao/_extrato.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/anual.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="wrap">
+    {% include "anual/partials/_header.html" %}
+    {% include "anual/partials/_resumo.html" %}
+    {% include "anual/partials/_dashboard.html" %}
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <script type="module" src="{% asset 'js/anual.js' %}"></script>
+{% endblock %}

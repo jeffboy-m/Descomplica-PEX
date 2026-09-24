@@ -1,0 +1,14 @@
+{% load static %}
+{% load moeda %}
+
+{% for b in bancos_balances %}
+  <div class="sub-bar__pill" data-balance-pill="{{ b.nome }}">
+    {% if b.logo %}
+      <img src="{% static b.logo %}" alt="{{ b.nome }}" class="sub-bar__logo">
+    {% else %}
+      <span class="sub-bar__emoji">🏦</span>
+    {% endif %}
+    <span class="sub-bar__label">{{ b.nome }}:</span>
+    <strong class="sub-bar__value" data-balance-value="{{ b.nome }}">R$ {{ b.saldo|moeda }}</strong>
+  </div>
+{% endfor %}

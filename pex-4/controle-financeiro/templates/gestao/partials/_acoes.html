@@ -1,0 +1,22 @@
+<div class="gestao-action-row" data-refresh-region="gestao-acoes">
+  <button type="button" class="panel-action-button launch-button" data-create-transaction="{{ aba_ativa }}" {% if aba_ativa == 'extrato' %}hidden{% endif %}>
+    {% if aba_ativa == 'transferencia' %}+ Transferir{% else %}+ Lançar{% endif %}
+  </button>
+  {% if categorias_filtro_rapido %}
+    <div class="quick-category-filter">
+      <label class="quick-category-filter__label" for="quick-category-filter">Categoria</label>
+      <select id="quick-category-filter" name="categoria" data-category-filter>
+        <option value="">Todas</option>
+        {% for categoria in categorias_filtro_rapido %}
+          <option value="{{ categoria.id }}"{% if categoria_filtro and categoria.id == categoria_filtro.id %} selected{% endif %}>
+            {{ categoria.nome }} {{ categoria.icone }}
+          </option>
+        {% endfor %}
+      </select>
+    </div>
+    <button type="button" class="active-filter" data-category-filter-chip data-category-filter-clear hidden>
+      <span data-category-filter-label></span>
+      <span class="active-filter__close" aria-hidden="true">×</span>
+    </button>
+  {% endif %}
+</div>

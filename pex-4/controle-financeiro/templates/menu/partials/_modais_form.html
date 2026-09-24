@@ -1,0 +1,174 @@
+{% load static %}
+
+{% if cadastro_tipo == "bancos" %}
+  <dialog class="modal-shell" id="banco-modal" data-modal autofocus>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>{% if banco_edicao %}Editar banco{% else %}Cadastrar banco{% endif %}</h3>
+      </div>
+      <form method="post" class="modal-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="save_banco">
+        <input type="hidden" name="banco_id" value="{{ banco_edicao.id|default:'' }}">
+        <p>
+          <label for="{{ banco_form.nome.id_for_label }}">{{ banco_form.nome.label }}:</label>
+          {{ banco_form.nome }}
+          {{ banco_form.nome.errors }}
+        </p>
+        <p>
+          <label for="{{ banco_form.saldo_inicial.id_for_label }}">{{ banco_form.saldo_inicial.label }}:</label>
+          {{ banco_form.saldo_inicial }}
+          {{ banco_form.saldo_inicial.errors }}
+        </p>
+        {{ banco_form.logo }}
+        {{ banco_form.logo.errors }}
+        <div class="logo-picker" data-logo-picker data-target="{{ banco_form.logo.id_for_label }}">
+          <label>Logo:</label>
+          <div class="logo-picker__header-row">
+            <div class="logo-picker__preview" data-logo-preview>
+              <span class="hint">Sem logo</span>
+            </div>
+            <input type="search" class="logo-picker__search" placeholder="Buscar logo..." data-logo-search>
+          </div>
+          <div class="logo-picker__grid">
+            <button type="button" class="logo-picker__option" data-logo-path="" data-logo-name="sem logo">
+              <span class="logo-picker__empty">Sem logo</span>
+            </button>
+            {% for logo in banco_logos %}
+              <button type="button" class="logo-picker__option" data-logo-path="{{ logo.path }}" data-logo-name="{{ logo.name|lower }}">
+                <img src="{% static logo.path %}" alt="{{ logo.name }}" loading="lazy">
+                <span>{{ logo.name }}</span>
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-actions modal-actions">
+          <button type="submit">{% if banco_edicao %}Atualizar banco{% else %}Salvar banco{% endif %}</button>
+          <button type="button" class="link-button" data-modal-close>Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+{% endif %}
+
+{% if cadastro_tipo == "cartoes" %}
+  <dialog class="modal-shell" id="cartao-modal" data-modal autofocus>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>{% if cartao_edicao %}Editar cartao{% else %}Cadastrar cartao{% endif %}</h3>
+      </div>
+      <form method="post" class="modal-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="save_cartao">
+        <input type="hidden" name="cartao_id" value="{{ cartao_edicao.id|default:'' }}">
+        <p>
+          <label for="{{ cartao_form.nome.id_for_label }}">{{ cartao_form.nome.label }}:</label>
+          {{ cartao_form.nome }}
+          {{ cartao_form.nome.errors }}
+        </p>
+        <p>
+          <label for="{{ cartao_form.limite_total.id_for_label }}">{{ cartao_form.limite_total.label }}:</label>
+          {{ cartao_form.limite_total }}
+          {{ cartao_form.limite_total.errors }}
+        </p>
+        <p>
+          <label for="{{ cartao_form.dia_fechamento.id_for_label }}">{{ cartao_form.dia_fechamento.label }}:</label>
+          {{ cartao_form.dia_fechamento }}
+          {{ cartao_form.dia_fechamento.errors }}
+        </p>
+        <p>
+          <label for="{{ cartao_form.dia_vencimento.id_for_label }}">{{ cartao_form.dia_vencimento.label }}:</label>
+          {{ cartao_form.dia_vencimento }}
+          {{ cartao_form.dia_vencimento.errors }}
+        </p>
+        {{ cartao_form.logo }}
+        {{ cartao_form.logo.errors }}
+        <div class="logo-picker" data-logo-picker data-target="{{ cartao_form.logo.id_for_label }}">
+          <label>Logo:</label>
+          <div class="logo-picker__header-row">
+            <div class="logo-picker__preview" data-logo-preview>
+              <span class="hint">Sem logo</span>
+            </div>
+            <input type="search" class="logo-picker__search" placeholder="Buscar logo..." data-logo-search>
+          </div>
+          <div class="logo-picker__grid">
+            <button type="button" class="logo-picker__option" data-logo-path="" data-logo-name="sem logo">
+              <span class="logo-picker__empty">Sem logo</span>
+            </button>
+            {% for logo in cartao_logos %}
+              <button type="button" class="logo-picker__option" data-logo-path="{{ logo.path }}" data-logo-name="{{ logo.name|lower }}">
+                <img src="{% static logo.path %}" alt="{{ logo.name }}" loading="lazy">
+                <span>{{ logo.name }}</span>
+              </button>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="form-actions modal-actions">
+          <button type="submit">{% if cartao_edicao %}Atualizar cartao{% else %}Salvar cartao{% endif %}</button>
+          <button type="button" class="link-button" data-modal-close>Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+{% endif %}
+
+{% if cadastro_tipo == "categorias" %}
+  <dialog class="modal-shell" id="categoria-modal" data-modal autofocus>
+    <div class="modal-card">
+      <div class="modal-head">
+        <h3>{% if categoria_edicao %}Editar categoria{% else %}Cadastrar categoria{% endif %}</h3>
+      </div>
+      <form method="post" class="modal-form">
+        {% csrf_token %}
+        <input type="hidden" name="action" value="save_categoria">
+        <input type="hidden" name="categoria_id" value="{{ categoria_edicao.id|default:'' }}">
+        {{ categoria_form.non_field_errors }}
+        <p>
+          <label for="{{ categoria_form.nome.id_for_label }}">{{ categoria_form.nome.label }}:</label>
+          {{ categoria_form.nome }}
+          {{ categoria_form.nome.errors }}
+        </p>
+        {{ categoria_form.icone }}
+        {% with icone_atual=categoria_form.icone.value|default:"🏷️" %}
+          <div class="category-icon-picker" data-category-icon-picker>
+            <label>Ícone:</label>
+            <div class="category-icon-picker__header-row">
+              <span class="category-icon-picker__current" data-category-icon-current aria-label="Ícone selecionado">{{ icone_atual }}</span>
+              <span class="hint">Ícone selecionado</span>
+            </div>
+            <div class="category-icon-picker__scroll">
+              {% for icone in categoria_icones %}
+                <button
+                  type="button"
+                  class="category-icon-picker__option {% if icone == icone_atual %}is-selected{% endif %}"
+                  data-category-icon-option="{{ icone }}"
+                  aria-label="Selecionar ícone"
+                >{{ icone }}</button>
+              {% endfor %}
+            </div>
+            {{ categoria_form.icone.errors }}
+          </div>
+        {% endwith %}
+        <p>
+          <label for="{{ categoria_form.lado_padrao.id_for_label }}">{{ categoria_form.lado_padrao.label }}:</label>
+          {{ categoria_form.lado_padrao }}
+          {{ categoria_form.lado_padrao.errors }}
+        </p>
+        <p>
+          <label for="{{ categoria_form.afeta_resultado.id_for_label }}">{{ categoria_form.afeta_resultado.label }}:</label>
+          {{ categoria_form.afeta_resultado }}
+          {{ categoria_form.afeta_resultado.errors }}
+        </p>
+        <p>
+          <label for="{{ categoria_form.ativo.id_for_label }}">{{ categoria_form.ativo.label }}:</label>
+          {{ categoria_form.ativo }}
+          {{ categoria_form.ativo.errors }}
+        </p>
+        <div class="form-actions modal-actions">
+          <button type="submit">{% if categoria_edicao %}Atualizar categoria{% else %}Salvar categoria{% endif %}</button>
+          <button type="button" class="link-button" data-modal-close>Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </dialog>
+{% endif %}

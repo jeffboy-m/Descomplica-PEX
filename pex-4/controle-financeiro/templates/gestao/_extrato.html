@@ -1,0 +1,146 @@
+{% load moeda l10n %}
+<!-- Dashboard de Acompanhamento (Aba Extrato) -->
+<section class="dashboard-section" id="dashboard-section" data-refresh-region="gestao-extrato"{% if aba_ativa != 'extrato' %} hidden{% endif %}>
+  {% if aba_ativa == 'extrato' %}
+  <div class="dashboard-grid">
+    
+    <div class="dashboard-stack dashboard-stack--income">
+      <!-- 1. Renda x Gastos -->
+      <div class="dashboard-card income-expense-card">
+        <h4 class="dashboard-card__title">Renda x Gastos</h4>
+        <div class="income-expense-card__body">
+          <div class="income-expense-donut" data-income-expense-donut data-income="{{ receitas_mes }}" data-expense="{{ gastos_lucro_realizado }}">
+            <span class="hint">Carregando gráfico...</span>
+          </div>
+          {% if renda_base_mensal > 0 %}
+            <div class="budget-reading__rows">
+              <span>Economia planejada <strong>R$ {{ sobra_planejada|moeda }}</strong></span>
+              <span>Economia real <strong>R$ {{ economia_real|moeda }}</strong></span>
+              <span>
+                {% if extra_receita_mes >= 0 %}Extra no mês{% else %}Abaixo da base{% endif %}
+                <strong>R$ {{ extra_receita_mes|moeda }}</strong>
+              </span>
+            </div>
+          {% else %}
+            <p class="hint budget-reading__hint">Defina uma renda base para ativar esta leitura.</p>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- 2. Ranking de Rendas -->
+      <div class="dashboard-card income-ranking-card">
+        <h4 class="dashboard-card__title">Ranking de Rendas</h4>
+        <div class="ranking-list" data-max-val="{{ receitas_mes|add:a_receber_total }}">
+          {% for r in ranking_rendas %}
+            <a class="ranking-item ranking-link" href="{{ r.link }}" data-val="{{ r.total }}">
+              <div class="ranking-item__head">
+                 <span>{{ r.categoria__nome }}</span>
+                <strong>R$ {{ r.total|moeda }}</strong>
+              </div>
+              <div class="ranking-track ranking-track--income">
+                <div class="ranking-bar ranking-bar--income"></div>
+              </div>
+            </a>
+          {% empty %}
+            <p class="hint ranking-empty">Nenhum lançamento no mês.</p>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Evolução do Saldo Final -->
+    <div class="dashboard-card balance-chart-card">
+      <h4 class="dashboard-card__title">Evolução do Saldo Final</h4>
+      <div class="balance-chart" data-balance-chart aria-label="Evolução do saldo final">
+        {% for e in evolucao_saldo %}
+          <span data-chart-point data-label="{{ e.label }}" data-value="{{ e.saldo }}"></span>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 4. Ranking Geral (Gastos) -->
+    <div class="dashboard-card expense-ranking-card">
+      <div class="ranking-card-head">
+        <h4 class="ranking-card-head__title">Geral</h4>
+        <div class="ranking-card-head__actions">
+          <a class="ranking-goals-link" href="/gestao/?aba=metas&mes={{ mes }}&ano={{ ano }}" data-gestao-tab-link="metas">Alterar metas</a>
+          <button type="button" class="ranking-compare-button" data-modal-open="ranking-unificado-comparativo-modal" aria-label="Comparar ranking geral e cartões com o mês anterior" title="Comparar com mês anterior">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 6h13"/>
+              <path d="m13 3 3 3-3 3"/>
+              <path d="M21 18H8"/>
+              <path d="m11 15-3 3 3 3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="ranking-list" data-max-val="{{ despesas_mes|add:a_pagar_total }}">
+        {% for g in ranking_gastos %}
+          <a class="ranking-item ranking-link ranking-item--{{ g.nivel_meta }}" href="{{ g.link }}" data-val="{{ g.total }}"{% if g.meta_reais %} data-meta-percent="{{ g.percentual_meta|unlocalize }}"{% endif %}>
+            <div class="ranking-item__head">
+              <span>
+                {{ g.categoria__nome }}
+                <small class="ranking-item__meta">
+                  {% if g.meta_reais %}
+                    {{ g.percentual_meta|floatformat:1 }}% da meta
+                  {% elif g.percentual_receita %}
+                    {{ g.percentual_receita|floatformat:1 }}% da receita
+                  {% endif %}
+                </small>
+              </span>
+              <strong>R$ {{ g.total|moeda }}</strong>
+            </div>
+            <div class="ranking-track">
+              <div class="ranking-bar{% if not g.meta_reais %} ranking-bar--danger{% endif %}"></div>
+            </div>
+          </a>
+        {% empty %}
+          <p class="hint ranking-empty">Nenhum lançamento no mês.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- 5. Ranking de Cartões -->
+    <div class="dashboard-card card-ranking-card">
+      <div class="ranking-card-head">
+        <h4 class="ranking-card-head__title">Cartões</h4>
+        <div class="ranking-card-head__actions">
+          <a class="ranking-goals-link" href="/gestao/?aba=metas&mes={{ mes }}&ano={{ ano }}" data-gestao-tab-link="metas">Alterar metas</a>
+          <button type="button" class="ranking-compare-button" data-modal-open="ranking-unificado-comparativo-modal" aria-label="Comparar ranking geral e cartões com o mês anterior" title="Comparar com mês anterior">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 6h13"/>
+              <path d="m13 3 3 3-3 3"/>
+              <path d="M21 18H8"/>
+              <path d="m11 15-3 3 3 3"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="ranking-list" data-max-val="{{ cartao_mes }}">
+        {% for c in ranking_cartao %}
+          <a class="ranking-item ranking-link ranking-item--{{ c.nivel_meta }}" href="{{ c.link }}" data-val="{{ c.total }}"{% if c.meta_reais %} data-meta-percent="{{ c.percentual_meta|unlocalize }}"{% endif %}>
+            <div class="ranking-item__head">
+              <span>
+                {{ c.categoria__nome }}
+                <small class="ranking-item__meta">
+                  {% if c.meta_reais %}
+                    {{ c.percentual_meta|floatformat:1 }}% da meta
+                  {% endif %}
+                </small>
+              </span>
+              <strong>R$ {{ c.total|moeda }}</strong>
+            </div>
+            <div class="ranking-track">
+              <div class="ranking-bar{% if not c.meta_reais %} ranking-bar--card{% endif %}"></div>
+            </div>
+          </a>
+        {% empty %}
+          <p class="hint ranking-empty">Nenhum lançamento no cartão.</p>
+        {% endfor %}
+      </div>
+    </div>
+
+  </div>
+  {% include "gestao/partials/_ranking_compare_modais.html" %}
+  {% endif %}
+</section>

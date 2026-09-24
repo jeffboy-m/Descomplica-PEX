@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Aceitar convite{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="wrap login-wrap">
+    <section class="card login-card">
+      <div class="eyebrow">Convite</div>
+      <h1>Criar acesso</h1>
+      <p class="hint">Defina seus dados para acessar o sistema com o email {{ convite.email }}.</p>
+      <form method="post" class="login-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <p>
+          <label>Email:</label>
+          <input type="email" value="{{ convite.email }}" disabled>
+        </p>
+        <p>
+          <label for="{{ form.nome.id_for_label }}">Nome:</label>
+          {{ form.nome }}
+          {{ form.nome.errors }}
+        </p>
+        <p>
+          <label for="{{ form.senha.id_for_label }}">Senha:</label>
+          {{ form.senha }}
+          {{ form.senha.errors }}
+        </p>
+        <p>
+          <label for="{{ form.confirmar_senha.id_for_label }}">Repetir senha:</label>
+          {{ form.confirmar_senha }}
+          {{ form.confirmar_senha.errors }}
+        </p>
+        <button type="submit">Criar acesso</button>
+      </form>
+    </section>
+  </div>
+{% endblock %}

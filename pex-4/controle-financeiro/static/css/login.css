@@ -1,0 +1,115 @@
+.login-wrap {
+  display: grid;
+  align-items: center;
+  width: min(100%, 660px);
+  min-height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+  max-width: 660px;
+  margin: 0 auto;
+  padding: max(28px, env(safe-area-inset-top)) 16px max(28px, env(safe-area-inset-bottom));
+}
+
+.login-card {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: var(--shadow-soft);
+}
+
+.login-card--narrow {
+  max-width: 440px;
+}
+
+html.auth-public .app-shell,
+html.auth-public.nav-pinned .app-shell {
+  min-height: 100dvh;
+  padding-left: calc(20px + env(safe-area-inset-left));
+}
+
+html.auth-public .app-toolbar,
+html.auth-public .nav-shell,
+html.auth-public .nav-backdrop {
+  display: none !important;
+}
+
+html.auth-public.nav-pinned .global-page-loader {
+  inset: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100vw !important;
+}
+
+.login-form p {
+  margin: 0;
+}
+
+.login-form p + p {
+  margin-top: 12px;
+}
+
+.login-form__field {
+  margin-bottom: 16px;
+}
+
+.login-form__label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.login-form__error {
+  color: var(--danger);
+  font-size: 0.8rem;
+  display: block;
+  margin-top: 4px;
+}
+
+.login-form__actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.login-form__actions > * {
+  flex: 1;
+}
+
+.login-form__actions .ghost-button {
+  text-align: center;
+}
+
+.password-toggle-field {
+  position: relative;
+  display: block;
+}
+
+.password-toggle-button {
+  all: unset;
+  position: absolute;
+  right: 14px;
+  top: 8px;
+  cursor: pointer;
+  color: #8fa0d8;
+  line-height: 1;
+}
+
+.password-toggle-button.is-showing [data-password-toggle-slash] {
+  display: none;
+}
+
+.button-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  margin-top: 18px;
+  padding: 0 18px;
+  color: #ffffff;
+  background: var(--brand);
+  border-radius: 12px;
+  font-weight: 800;
+  text-decoration: none;
+}

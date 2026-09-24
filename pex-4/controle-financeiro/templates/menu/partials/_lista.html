@@ -1,0 +1,71 @@
+{% load static %}
+
+{% if cadastro_tipo == "bancos" %}
+  <section class="card cadastro-panel" id="details-bancos">
+    <div class="entity-list entity-list--bancos">
+      {% for banco in bancos %}
+        <button type="button" class="entity-list__item entity-list__item--with-logo" data-modal-open="banco-detail-{{ banco.id }}">
+          {% if banco.logo %}
+            <img class="entity-list__logo entity-list__logo--banco" src="{% static banco.logo %}" alt="{{ banco.nome }}">
+          {% endif %}
+          <span>{{ banco.nome }}</span>
+        </button>
+      {% empty %}
+        <p class="hint">Nenhum banco cadastrado ainda.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% elif cadastro_tipo == "cartoes" %}
+  <section class="card cadastro-panel" id="details-cartoes">
+    <div class="entity-list entity-list--cartoes">
+      {% for cartao in cartoes %}
+        <button type="button" class="entity-list__item entity-list__item--with-logo" data-modal-open="cartao-detail-{{ cartao.id }}">
+          {% if cartao.logo %}
+            <img class="entity-list__logo entity-list__logo--cartao" src="{% static cartao.logo %}" alt="{{ cartao.nome }}">
+          {% endif %}
+          <span>{{ cartao.nome }}</span>
+        </button>
+      {% empty %}
+        <p class="hint">Nenhum cartao cadastrado ainda.</p>
+      {% endfor %}
+    </div>
+  </section>
+{% else %}
+  <section class="card cadastro-panel" id="details-categorias">
+    {% if not categorias %}
+      <p class="hint">Nenhuma categoria cadastrada ainda.</p>
+    {% else %}
+      <div class="categories-container">
+        <div>
+          <h3 class="category-column-title">Despesas</h3>
+          <div class="entity-list">
+            {% for categoria in categorias %}
+              {% if categoria.lado_padrao == 'saida' or categoria.nome == 'Fatura de Cartão' %}
+                <button type="button" class="entity-list__item entity-list__item--{{ categoria.lado_padrao }} {% if not categoria.ativo %}entity-list__item--inactive{% endif %}" data-modal-open="categoria-detail-{{ categoria.id }}">
+                  <span>{{ categoria.nome }}</span>
+                  <span class="entity-list__category-icon" aria-hidden="true">{{ categoria.icone }}</span>
+                </button>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+
+        <div>
+          <h3 class="category-column-title">Receitas & Outros</h3>
+          <div class="entity-list">
+            {% for categoria in categorias %}
+              {% if categoria.lado_padrao == 'entrada' or categoria.lado_padrao == 'ambos' %}
+                {% if categoria.nome != 'Fatura de Cartão' %}
+                  <button type="button" class="entity-list__item entity-list__item--{{ categoria.lado_padrao }} {% if not categoria.ativo %}entity-list__item--inactive{% endif %}" data-modal-open="categoria-detail-{{ categoria.id }}">
+                    <span>{{ categoria.nome }}</span>
+                    <span class="entity-list__category-icon" aria-hidden="true">{{ categoria.icone }}</span>
+                  </button>
+                {% endif %}
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    {% endif %}
+  </section>
+{% endif %}

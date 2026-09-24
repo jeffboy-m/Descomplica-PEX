@@ -1,0 +1,33 @@
+{% load moeda %}
+
+<section class="anual-summary-grid">
+  <div class="anual-summary-card anual-summary-card--despesas">
+    <span class="anual-summary-card__label">Saída Anual</span>
+    <strong class="anual-summary-card__value">R$ {{ saida_resultado_ano|moeda }}</strong>
+    <span class="anual-summary-card__pending anual-summary-card__pending--empty"></span>
+  </div>
+  <div class="anual-summary-card anual-summary-card--receitas">
+    <span class="anual-summary-card__label">Entrada Anual</span>
+    <strong class="anual-summary-card__value">R$ {{ receitas_ano|moeda }}</strong>
+    <span class="anual-summary-card__pending anual-summary-card__pending--empty"></span>
+  </div>
+  <div class="anual-summary-card anual-summary-card--lucro">
+    <span class="anual-summary-card__label">Lucro no Ano</span>
+    <strong class="anual-summary-card__value {% if lucro_ano >= 0 %}is-positive{% else %}is-negative{% endif %}">
+      R$ {{ lucro_ano|moeda }}
+    </strong>
+    <span class="anual-summary-card__pending anual-summary-card__pending--empty"></span>
+  </div>
+  <div class="anual-summary-card anual-summary-card--saldo">
+    <span class="anual-summary-card__label">Saldo Atual/Final</span>
+    <strong class="anual-summary-card__value">R$ {{ saldo_final_ano|moeda }}</strong>
+    <span class="anual-summary-card__pending">
+      Inicial: R$ {{ saldo_inicial_ano|moeda }} ({% if crescimento_pct >= 0 %}+{% endif %}{{ crescimento_pct|floatformat:2 }}%)
+    </span>
+  </div>
+  <div class="anual-summary-card anual-summary-card--cartao">
+    <span class="anual-summary-card__label">Total Gasto em Cartão</span>
+    <strong class="anual-summary-card__value">R$ {{ cartao_ano|moeda }}</strong>
+    <span class="anual-summary-card__pending anual-summary-card__pending--empty"></span>
+  </div>
+</section>

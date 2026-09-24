@@ -1,0 +1,14 @@
+<header class="anual-nav">
+  <div class="anual-nav__selector">
+    <h2 class="anual-nav__title">
+      Consolidado {{ ano }}
+    </h2>
+    <form method="get" class="year-select-form">
+      <select name="ano" class="year-select" data-anual-year-select>
+        {% for a in anos_disponiveis %}
+          <option value="{{ a }}" {% if a == ano %}selected{% endif %}>{{ a }}</option>
+        {% endfor %}
+      </select>
+    </form>
+  </div>
+</header>

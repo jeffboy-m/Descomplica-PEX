@@ -1,0 +1,123 @@
+/* ==========================================
+   DESIGN SYSTEM - CENTRALIZED COLOR THEMES
+   ========================================== */
+
+/* Tema Claro (Padrão) */
+:root {
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-card-soft: #f1f5f9;
+  --border-soft: #e2e8f0;
+  --border-input: #cbd5e1;
+  
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --text-sub: #64748b;
+  
+  --badge-bg: var(--bg-page);
+  --badge-border: var(--border-soft);
+  --badge-text: var(--text-muted);
+  
+  --brand: #14c878;
+  --brand-strong: #0f9f60;
+  --brand-soft: #ecfdf4;
+  --selection-bg: #e2e8f0;
+  --selection-text: #0f172a;
+  --selection-border: #cbd5e1;
+  --selection-accent: var(--brand);
+  --selection-accent-strong: var(--brand-strong);
+  --selection-accent-soft: var(--brand-soft);
+  --selection-ring: rgba(20, 200, 120, 0.16);
+  --state-hover-bg: var(--bg-card-soft);
+  --state-hover-text: var(--text-main);
+  --state-hover-border: var(--border-soft);
+  --state-hover-icon-bg: rgba(15, 23, 42, 0.08);
+  --interactive-bg: var(--state-hover-bg);
+  --interactive-text: var(--state-hover-text);
+  --interactive-border: var(--state-hover-border);
+  --interactive-icon-bg: var(--state-hover-icon-bg);
+  --skeleton-base: rgba(15, 23, 42, 0.08);
+  --skeleton-shine: rgba(255, 255, 255, 0.72);
+  --skeleton-radius: 8px;
+  --danger: #ef4444;
+  
+  --select-bg: var(--selection-bg);
+  --select-text: var(--selection-text);
+  --select-border: var(--selection-border);
+  
+  --control-height: 42px;
+  --control-radius: 10px;
+  --control-padding-x: 16px;
+  --control-font-size: 16px;
+  
+  --shadow-soft: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.05);
+  --shadow-control: 0 1px 2px rgba(15, 23, 42, 0.05);
+}
+
+/* Tema Escuro (Dark Mode) */
+html[data-theme="dark"] {
+  --bg-page: #0b0f19;
+  --bg-card: #131b2e;
+  --bg-card-soft: #1e293b;
+  --border-soft: #1e293b;
+  --border-input: #334155;
+  
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --text-sub: #ffffff;
+  
+  --badge-bg: rgba(255, 255, 255, 0.08);
+  --badge-border: rgba(255, 255, 255, 0.15);
+  --badge-text: #ffffff;
+  
+  --brand: #14c878;
+  --brand-strong: #42d98d;
+  --brand-soft: #064e3b;
+  --selection-bg: rgba(216, 137, 28, 0.72);
+  --selection-text: #fffaf0;
+  --selection-border: #f3a62b;
+  --selection-accent: var(--selection-bg);
+  --selection-accent-strong: var(--selection-border);
+  --selection-accent-soft: rgba(216, 137, 28, 0.18);
+  --selection-ring: rgba(216, 137, 28, 0.34);
+  --state-hover-bg: var(--bg-card-soft);
+  --state-hover-text: var(--text-main);
+  --state-hover-border: var(--border-soft);
+  --state-hover-icon-bg: rgba(15, 23, 42, 0.16);
+  --interactive-bg: var(--state-hover-bg);
+  --interactive-text: var(--state-hover-text);
+  --interactive-border: var(--state-hover-border);
+  --interactive-icon-bg: var(--state-hover-icon-bg);
+  --skeleton-base: rgba(255, 255, 255, 0.08);
+  --skeleton-shine: rgba(255, 255, 255, 0.16);
+  --skeleton-radius: 8px;
+  --danger: #f87171;
+  
+  --select-bg: var(--selection-bg);
+  --select-text: var(--selection-text);
+  --select-border: var(--selection-border);
+  
+  --shadow-soft: 0 10px 25px -5px rgba(0, 0, 0, 0.3), 0 8px 10px -6px rgba(0, 0, 0, 0.3);
+  --shadow-control: none;
+}
+
+/* ==========================================
+   OVERRIDES ESPECÍFICOS DE ALTO CONTRASTE EM MODO ESCURO
+   ========================================== */
+
+/* Subtextos nos Cards de Resumo */
+html[data-theme="dark"] .summary-card__pending {
+  color: var(--text-sub) !important;
+  opacity: 0.95 !important;
+}
+
+/* Datas de vencimento nos Cartões */
+html[data-theme="dark"] .fatura-card__venc {
+  color: var(--text-sub) !important;
+  opacity: 0.9 !important;
+}
+
+html[data-theme="dark"] .fatura-card__venc .venc-lbl {
+  color: var(--text-sub) !important;
+  opacity: 0.7 !important;
+}

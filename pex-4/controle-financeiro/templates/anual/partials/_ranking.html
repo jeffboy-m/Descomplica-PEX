@@ -1,0 +1,20 @@
+{% load moeda %}
+
+<div class="dashboard-card {{ card_class }} anual-dashboard-card">
+  <h4 class="anual-card-title">{{ title }}</h4>
+  <div class="ranking-list anual-ranking-list" data-max-val="{{ ranking_max }}">
+    {% for item in ranking_items %}
+      <div class="ranking-item" data-val="{{ item.total }}">
+        <div class="anual-ranking-row">
+          <span>{{ item.categoria__nome }}</span>
+          <strong>R$ {{ item.total|moeda }}</strong>
+        </div>
+        <div class="anual-ranking-track">
+          <div class="ranking-bar {{ bar_class }}"></div>
+        </div>
+      </div>
+    {% empty %}
+      <p class="hint anual-empty">{{ empty_message }}</p>
+    {% endfor %}
+  </div>
+</div>

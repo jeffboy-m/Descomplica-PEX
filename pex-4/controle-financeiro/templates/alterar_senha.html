@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Alterar Senha{% endblock %}
+{% block extra_css %}
+  <link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+{% block content %}
+  <div class="wrap login-wrap">
+    <section class="card login-card login-card--narrow">
+      <div class="eyebrow">Segurança</div>
+      <h1>Alterar Senha</h1>
+      <p class="hint">Digite sua senha atual e insira uma nova senha forte.</p>
+      <form method="post" class="login-form">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        {% for field in form %}
+          <p class="login-form__field">
+            <label class="login-form__label" for="{{ field.id_for_label }}">{{ field.label }}:</label>
+            {{ field }}
+            {% if field.errors %}
+              <span class="login-form__error">{{ field.errors.as_text }}</span>
+            {% endif %}
+          </p>
+        {% endfor %}
+        <div class="login-form__actions">
+          <button type="submit">Alterar</button>
+          <a href="/menu/bancos/" class="ghost-button">Cancelar</a>
+        </div>
+      </form>
+    </section>
+  </div>
+{% endblock %}

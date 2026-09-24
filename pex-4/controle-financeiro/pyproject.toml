@@ -1,0 +1,19 @@
+[project]
+name = "controle-financeiro"
+version = "0.1.0"
+description = "Base inicial do sistema financeiro em Django."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+  "django==6.0.5",
+  "pillow==11.2.1",
+  "python-decouple==3.8",
+  "psycopg2-binary==2.9.12",
+  "gunicorn==23.0.0",
+  "whitenoise>=6.8.0",
+  "holidays>=0.98",
+  "pywebpush>=2.0.3",
+]
+
+[tool.uv]
+package = false

@@ -1,0 +1,26 @@
+<section class="anual-dashboard-grid">
+  <div class="dashboard-stack anual-dashboard-stack">
+    <div class="dashboard-card income-expense-card anual-dashboard-card">
+      <h4 class="anual-card-title">Renda x Gastos</h4>
+      <div class="anual-donut-panel">
+        <div class="income-expense-donut" data-income-expense-donut data-income="{{ receitas_ano }}" data-expense="{{ saida_resultado_ano }}">
+          <span class="hint">Carregando gráfico...</span>
+        </div>
+      </div>
+    </div>
+
+    {% include "anual/partials/_ranking.html" with card_class="income-ranking-card" title="Ranking de Rendas" ranking_items=ranking_rendas ranking_max=receitas_ano bar_class="ranking-bar--income" empty_message="Nenhuma renda registrada." only %}
+  </div>
+
+  <div class="dashboard-card balance-chart-card anual-dashboard-card">
+    <h4 class="anual-card-title">Evolução do Saldo Final</h4>
+    <div class="balance-chart" data-balance-chart aria-label="Evolução do saldo final no ano">
+      {% for e in evolucao_saldo %}
+        <span data-chart-point data-label="{{ e.label }}" data-value="{{ e.saldo }}"></span>
+      {% endfor %}
+    </div>
+  </div>
+
+  {% include "anual/partials/_ranking.html" with card_class="expense-ranking-card" title="Ranking de Gastos" ranking_items=ranking_gastos ranking_max=saida_resultado_ano bar_class="ranking-bar--danger" empty_message="Nenhum gasto registrado." only %}
+  {% include "anual/partials/_ranking.html" with card_class="card-ranking-card" title="Ranking de Gastos em Cartões" ranking_items=ranking_cartao ranking_max=cartao_ano bar_class="ranking-bar--card" empty_message="Nenhum gasto em cartão." only %}
+</section>

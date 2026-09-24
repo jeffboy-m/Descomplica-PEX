@@ -1,0 +1,84 @@
+{% load moeda %}
+
+{% for t in transacoes %}
+  {% if t.tipo == 'saida' and t.categoria.nome != 'Fatura de Cartão' %}
+    <div class="transaction-item" data-type="{{ t.tipo }}"
+         data-id="{{ t.id }}"
+         data-tipo="{{ t.tipo }}"
+         data-data="{{ t.data|date:'Y-m-d' }}"
+         data-categoria="{{ t.categoria.id }}"
+         data-beneficiario="{{ t.beneficiario_pagador }}"
+         data-descricao="{{ t.descricao }}"
+         data-valor="{{ t.valor|stringformat:'.2f' }}"
+         data-banco="{{ t.banco_origem_destino.id|default:'' }}"
+         data-cartao="{{ t.cartao.id|default:'' }}"
+         data-status="{{ t.status }}"
+         data-parcelas="{{ t.total_parcelas }}"
+         data-recorrencia="{{ t.recorrencia_id|default:'' }}"
+         data-assinatura-recorrente="{{ t.assinatura_recorrente|yesno:'1,0' }}"
+         data-edit-transaction>
+       
+       <div class="transaction-item__left">
+        <div class="transaction-item__icon">
+          💸
+        </div>
+        <div class="transaction-item__info">
+          <span class="transaction-item__category">
+            <span>{{ t.categoria.nome }}</span>
+            <span class="transaction-item__category-icon" aria-hidden="true">{{ t.categoria.icone }}</span>
+          </span>
+          <span class="transaction-item__desc">
+            {{ t.beneficiario_pagador }}{% if t.beneficiario_pagador and t.descricao %} • {% endif %}{{ t.descricao }}
+          </span>
+          <div class="transaction-item__meta-row">
+            {% if t.banco_origem_destino %}
+              <span class="transaction-item__source transaction-item__source--inline">{{ t.banco_origem_destino.nome }}</span>
+            {% endif %}
+            {% if t.recorrencia_id or t.assinatura_recorrente %}
+              <span class="transaction-item__recurrence-badge" title="Lançamento recorrente">Recorrente</span>
+            {% endif %}
+            <span class="transaction-item__date-inline">{{ t.data|date:"d/m/Y" }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="transaction-item__right">
+        <span class="transaction-item__value transaction-item__value--saida">
+          R$ {{ t.valor|moeda }}
+        </span>
+        {% if t.total_parcelas > 1 %}
+          <span class="transaction-item__badge transaction-item__badge--compact">{{ t.parcela_atual }}/{{ t.total_parcelas }}</span>
+        {% endif %}
+        
+        <div class="transaction-item__status-row">
+          {% if t.status == 'a_pagar' %}
+            {% if t.banco_origem_destino %}
+              <form method="post" class="transaction-item__inline-form" data-stop-propagation>
+                {% csrf_token %}
+                <input type="hidden" name="action" value="toggle">
+                <input type="hidden" name="transacao_id" value="{{ t.id }}">
+                <input type="hidden" name="aba" value="{{ aba_ativa }}">
+                <button type="submit" class="transaction-item__status-badge-btn transaction-item__status-badge-btn--pending" title="Pagar lançamento diretamente">
+                  A pagar
+                </button>
+              </form>
+            {% else %}
+              <button type="button" data-quick-pay data-transacao-id="{{ t.id }}" data-banco-id="" class="transaction-item__status-badge-btn transaction-item__status-badge-btn--pending" title="Pagar lançamento escolhendo banco">
+                A pagar
+              </button>
+            {% endif %}
+          {% else %}
+            <form method="post" class="transaction-item__inline-form" data-stop-propagation>
+              {% csrf_token %}
+              <input type="hidden" name="action" value="toggle">
+              <input type="hidden" name="transacao_id" value="{{ t.id }}">
+              <input type="hidden" name="aba" value="{{ aba_ativa }}">
+              <button type="submit" class="transaction-item__status-badge-btn transaction-item__status-badge-btn--done" title="Estornar pagamento">
+                Pago
+              </button>
+            </form>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}

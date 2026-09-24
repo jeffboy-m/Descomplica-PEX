@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static assets %}
+{% load moeda %}
+{% block title %}Dashboard Financeiro{% endblock %}
+
+{% block extra_css %}
+  <link rel="stylesheet" href="{% asset 'css/gestao/_extrato.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/gestao/_receitas.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/gestao/_despesas.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/gestao/_cartao.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/gestao/_modais.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/gestao/index.css' %}">
+  <link rel="stylesheet" href="{% asset 'css/gestao/metas.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="wrap{% if aba_ativa == 'metas' %} metas-shell{% endif %}" data-active-tab="{{ aba_ativa }}">
+    <div class="modal-state" data-open-modal="{{ open_modal|default:'' }}" hidden></div>
+
+    <!-- Navegação de Meses -->
+    <header class="month-nav">
+      <div class="month-nav__selector">
+        <a href="?mes={{ mes_anterior }}&ano={{ ano_anterior }}&aba={{ aba_ativa }}" class="month-nav__btn" aria-label="Mês anterior">‹</a>
+        <h2 class="month-nav__title" data-month-picker-open data-modal-open="month-picker-modal" title="Clique para selecionar outro mês/ano">
+          {{ mes_nome_curto }} {{ ano }}
+          <span id="month-chevron">▾</span>
+        </h2>
+        <a href="?mes={{ mes_seguinte }}&ano={{ ano_seguinte }}&aba={{ aba_ativa }}" class="month-nav__btn" aria-label="Próximo mês">›</a>
+        <span class="month-nav__section-title" data-active-section-title>{{ aba_label }}</span>
+      </div>
+      {% if aba_ativa != 'metas' %}
+        <button type="button" class="budget-base-button" data-modal-open="orcamento-modal">
+          <span>Renda base</span>
+          <strong>
+            {% if renda_base_mensal %}
+              R$ {{ renda_base_mensal|moeda }}
+            {% else %}
+              Definir
+            {% endif %}
+          </strong>
+        </button>
+      {% endif %}
+    </header>
+
+    <div data-refresh-region="gestao-conteudo">
+      {% if aba_ativa == 'metas' %}
+        {% include "gestao/partials/_metas.html" %}
+        {% include "gestao/partials/_month_picker.html" with month_picker_action="/gestao/" month_picker_aba="metas" %}
+      {% else %}
+        <!-- Dados dinãmicos do Django serializados de forma segura para o JS externo -->
+        <script id="acompanhamento-data" type="application/json">
+          {{ acompanhamento_data_json|safe }}
+        </script>
+
+        <!-- Barra de Saldos Individuais -->
+        <div class="sub-bar" data-refresh-region="gestao-saldos">
+          {% include "gestao/partials/_saldos.html" %}
+        </div>
+
+        <!-- Cards de Resumo -->
+        <section class="summary-grid" data-refresh-region="gestao-resumo">
+          {% include "gestao/partials/_resumo.html" %}
+        </section>
+
+        {% include "gestao/partials/_acoes.html" %}
+
+        <!-- Aba Extrato (Gráficos/Rankings) -->
+        {% include "gestao/_extrato.html" %}
+
+        <!-- Listagem de Transações por Aba (Toggled via JS) -->
+        <section class="transactions-list" id="transactions-list-section" data-refresh-region="gestao-lista"{% if aba_ativa == 'extrato' %} hidden{% endif %}>
+          {% include "gestao/partials/_lista.html" %}
+        </section>
+
+        <!-- Modais do App -->
+        {% include "gestao/partials/_modais_region.html" %}
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
+
+{% block extra_js %}
+  <!-- Script com a lógica desacoplada da apresentação -->
+  <script src="{% asset 'js/gestao/cartoes.js' %}"></script>
+  <script src="{% asset 'js/gestao/metas.js' %}"></script>
+  <script type="module" src="{% asset 'js/gestao/dashboard.js' %}"></script>
+{% endblock %}
+
+
+

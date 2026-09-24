@@ -1,0 +1,88 @@
+.logo-picker {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.logo-picker__header-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.logo-picker__preview {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 100px;
+  min-height: 44px;
+  padding: 4px;
+  border: 1px solid var(--border-soft);
+  border-radius: var(--control-radius);
+  background: var(--bg-card-soft);
+}
+
+.logo-picker__preview img {
+  width: 36px;
+  height: 34px;
+  object-fit: contain;
+  border-radius: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  padding: 4px;
+}
+
+.logo-picker__search {
+  flex: 1;
+  margin-bottom: 0 !important;
+}
+
+.logo-picker__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(76px, 1fr));
+  gap: 8px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.logo-picker__option {
+  min-height: 76px;
+  padding: 6px;
+  border-radius: 8px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-card);
+  color: var(--text-muted);
+  display: grid;
+  place-items: center;
+  gap: 4px;
+  text-align: center;
+  font-size: 0.65rem;
+  line-height: 1.1;
+}
+
+.logo-picker__option img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.logo-picker__option span {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.logo-picker__option.is-selected {
+  border-color: var(--selection-border);
+  background: var(--selection-bg);
+  color: var(--selection-text);
+}
+
+.logo-picker__option.is-hidden {
+  display: none !important;
+}
+
+.logo-picker__empty {
+  font-weight: 700;
+}
